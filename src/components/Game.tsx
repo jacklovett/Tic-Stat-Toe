@@ -102,7 +102,12 @@ export const Game = () => {
   }
 
   return (
-    <Stack horizontal horizontalAlign="center" wrap>
+    <Stack
+      horizontal
+      horizontalAlign="center"
+      wrap
+      tokens={{ childrenGap: 10, padding: 10 }}
+    >
       <Board
         squares={currentTurn?.squares}
         selectSquare={(i: number) => handleClick(i)}

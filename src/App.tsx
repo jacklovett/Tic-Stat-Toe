@@ -1,6 +1,5 @@
 import React from 'react'
-import './App.css'
-import { Stack } from 'office-ui-fabric-react'
+import { Stack, Text } from 'office-ui-fabric-react'
 import { Game } from './components/Game'
 
 const styles = {
@@ -13,12 +12,18 @@ const styles = {
       color: '#ffffff',
     },
   },
+  title: {
+    root: {
+      fontSize: 36,
+      color: '#09d3ac',
+    },
+  },
 }
 
 function App() {
   return (
     <Stack styles={styles.app} verticalAlign="center">
-      <h1>Tic-Stat-Toe</h1>
+      <Text styles={styles.title}>Tic-Stat-Toe</Text>
       <Stack horizontalAlign="center">
         <Game />
       </Stack>
