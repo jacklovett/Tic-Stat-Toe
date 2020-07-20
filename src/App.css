@@ -5,13 +5,3 @@
 .App-link {
   color: #09d3ac;
 }
-
-.board {
-  margin: 12px;
-}
-
-.board-row:after {
-  clear: both;
-  content: '';
-  display: table;
-}
