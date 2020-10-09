@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Stack, IconButton } from 'office-ui-fabric-react'
+import * as commonStyles from './../styles'
 import { Board } from './Board'
 
 interface History {
@@ -39,7 +40,7 @@ const calculateWinner = (squares: string[]) => {
 const styles = {
   gameInfo: {
     root: {
-      minWidth: 150,
+      minWidth: 160,
     },
   },
 }
@@ -102,29 +103,33 @@ export const Game = () => {
   }
 
   return (
-    <Stack
-      horizontal
-      horizontalAlign="center"
-      wrap
-      tokens={{ childrenGap: 10, padding: 10 }}
-    >
-      <Board
-        squares={currentTurn?.squares}
-        selectSquare={(i: number) => handleClick(i)}
-      />
+    <Stack verticalAlign="center" horizontalAlign="center" grow verticalFill>
       <Stack
-        styles={styles.gameInfo}
+        horizontal
         horizontalAlign="center"
-        tokens={{ childrenGap: 10 }}
+        wrap
+        tokens={{ childrenGap: 20 }}
       >
-        <Text>{getStatus()}</Text>
-        <IconButton
-          iconProps={{ iconName: 'Refresh' }}
-          title="Reset"
-          ariaLabel="Reset"
-          onClick={() => reset()}
-          disabled={!stepNumber}
+        <Board
+          squares={currentTurn?.squares}
+          selectSquare={(i: number) => handleClick(i)}
         />
+        <Stack
+          styles={styles.gameInfo}
+          horizontalAlign="center"
+          tokens={{ childrenGap: 20 }}
+        >
+          <Text>{getStatus()}</Text>
+          {stepNumber && (
+            <IconButton
+              styles={commonStyles.iconButton}
+              iconProps={{ iconName: 'Refresh' }}
+              title="Reset"
+              ariaLabel="Reset"
+              onClick={() => reset()}
+            />
+          )}
+        </Stack>
       </Stack>
     </Stack>
   )
