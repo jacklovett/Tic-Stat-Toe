@@ -24,7 +24,7 @@ const styles = {
 export const Board = (props: IBoardProps) => {
   const { selectSquare, squares } = props
 
-  function renderSquare(index: number) {
+  const renderSquare = (index: number) => {
     return (
       <Square id={index} value={squares[index]} selectSquare={selectSquare} />
     )

@@ -28,12 +28,13 @@ const calculateWinner = (squares: string[]) => {
   ]
 
   let result = null
-  lines.forEach((line) => {
-    const [a, b, c] = line
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i]
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       result = squares[a]
+      break
     }
-  })
+  }
   return result
 }
 
@@ -51,7 +52,7 @@ export const Game = () => {
   const [isX, setIsX] = useState(true)
   const [stepNumber, setStepNumber] = useState(0)
   const [currentTurn, setCurrentTurn] = useState(history[0])
-  const [winner, setWinner] = useState(null)
+  const [winner, setWinner] = useState<string | null>(null)
 
   useEffect(() => {
     setCurrentTurn(history[stepNumber])
