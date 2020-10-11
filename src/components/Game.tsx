@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Text, Stack, IconButton } from 'office-ui-fabric-react'
 import * as commonStyles from './../styles'
 import { Board } from './Board'
+import { Player, SquareValue, Winner } from '../types'
 
 interface History {
-  squares: string[]
+  squares: SquareValue[]
 }
 
-const getInitialHistoryState = () => {
+interface GameData {
+  history: History[]
+  start: string
+  end?: string
+  winner: Winner | null
+}
+
+const getInitialHistoryState = (): History[] => {
   return [
     {
       squares: Array(9).fill(null),
@@ -15,7 +23,15 @@ const getInitialHistoryState = () => {
   ]
 }
 
-const calculateWinner = (squares: string[]) => {
+const getInitialGameDataState = (): GameData => {
+  return {
+    history: getInitialHistoryState(),
+    start: getDateNow(),
+    winner: null,
+  }
+}
+
+const calculateWinner = (squares: SquareValue[], stepNumber: number) => {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -27,7 +43,7 @@ const calculateWinner = (squares: string[]) => {
     [2, 4, 6],
   ]
 
-  let result = null
+  let result: Winner | null = null
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i]
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
@@ -35,7 +51,16 @@ const calculateWinner = (squares: string[]) => {
       break
     }
   }
+
+  if (!result && stepNumber > 7) {
+    result = 'DRAW'
+  }
+
   return result
+}
+
+const getDateNow = () => {
+  return new Date().toISOString().slice(0, 19)
 }
 
 const styles = {
@@ -47,29 +72,39 @@ const styles = {
 }
 
 export const Game = () => {
+  const [gameData, setGameData] = useState<GameData>(getInitialGameDataState())
   const [history, setHistory] = useState<History[]>(getInitialHistoryState())
 
   const [isX, setIsX] = useState(true)
   const [stepNumber, setStepNumber] = useState(0)
   const [currentTurn, setCurrentTurn] = useState(history[0])
-  const [winner, setWinner] = useState<string | null>(null)
+  const [winner, setWinner] = useState<Winner | null>(null)
 
-  useEffect(() => {
+  useMemo(() => {
+    if (winner && !gameData.end) {
+      setGameData({
+        ...gameData,
+        history,
+        winner,
+        end: getDateNow(),
+      })
+    }
+  }, [gameData, history, winner])
+
+  useMemo(() => {
     setCurrentTurn(history[stepNumber])
   }, [history, stepNumber])
-
-  useEffect(() => {
-    setWinner(calculateWinner(currentTurn.squares))
-  }, [currentTurn])
 
   const handleClick = (i: number) => {
     const newStateHistory = history.slice(0, stepNumber + 1)
     const nextTurn = newStateHistory[history.length - 1]
     const squares = nextTurn.squares.slice()
-    if (calculateWinner(squares) || squares[i]) {
+    if (winner || squares[i]) {
       return
     }
+
     squares[i] = getPlayer()
+
     setHistory(
       history.concat([
         {
@@ -77,30 +112,38 @@ export const Game = () => {
         },
       ]),
     )
+
     setStepNumber(history.length)
+
+    const calculatedWinner = calculateWinner(squares, stepNumber)
+
+    if (calculatedWinner) {
+      return setWinner(calculatedWinner)
+    }
+
     setIsX(!isX)
   }
 
-  const getPlayer = () => {
+  const getPlayer = (): Player => {
     return isX ? 'X' : 'O'
   }
 
   const getStatus = () => {
-    if (winner) {
-      return `Winner: ${winner}`
+    switch (winner) {
+      case null:
+        return `Next player: ${getPlayer()}`
+      case 'DRAW':
+        return `It's a draw!`
+      default:
+        return `Winner: ${winner}`
     }
-
-    if (!winner && stepNumber > 8) {
-      return `It's a draw!`
-    }
-
-    return `Next player: ${getPlayer()}`
   }
 
   const reset = () => {
     setStepNumber(0)
     setIsX(true)
     setHistory(getInitialHistoryState())
+    setWinner(null)
   }
 
   return (

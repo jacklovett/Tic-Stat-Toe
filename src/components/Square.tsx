@@ -1,9 +1,10 @@
 import React from 'react'
 import { DefaultButton } from 'office-ui-fabric-react'
+import { SquareValue } from '../types'
 
 interface ISquareProps {
   id: number
-  value: string
+  value: SquareValue
   selectSquare: (id: number) => void
 }
 
@@ -22,7 +23,7 @@ export const Square = (props: ISquareProps) => {
     <DefaultButton
       styles={styles.square}
       id={`${id}`}
-      text={value}
+      text={value || ''}
       onClick={() => {
         selectSquare(id)
       }}

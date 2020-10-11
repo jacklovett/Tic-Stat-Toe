@@ -1,10 +1,12 @@
 import React from 'react'
 import { Stack, IStyle } from 'office-ui-fabric-react'
+
+import { SquareValue } from '../types'
 import { Square } from './Square'
 
 interface IBoardProps {
   selectSquare: (i: number) => void
-  squares: string[]
+  squares: SquareValue[]
 }
 
 const styles = {
