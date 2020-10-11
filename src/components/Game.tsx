@@ -4,18 +4,25 @@ import * as commonStyles from './../styles'
 import { Board } from './Board'
 import { Player, SquareValue, Winner } from '../types'
 
-interface History {
+interface BoardHistory {
   squares: SquareValue[]
 }
 
+interface GameHistory {
+  boardHistory: BoardHistory[]
+  stepNumber: number
+  winner: Winner | null
+  isX: boolean
+}
+
 interface GameData {
-  history: History[]
+  history: BoardHistory[]
   start: string
   end?: string
   winner: Winner | null
 }
 
-const getInitialHistoryState = (): History[] => {
+const getInitialBoardHistory = (): BoardHistory[] => {
   return [
     {
       squares: Array(9).fill(null),
@@ -23,9 +30,18 @@ const getInitialHistoryState = (): History[] => {
   ]
 }
 
+const getInitialGameHistoryState = (): GameHistory => {
+  return {
+    boardHistory: getInitialBoardHistory(),
+    stepNumber: 0,
+    winner: null,
+    isX: true,
+  }
+}
+
 const getInitialGameDataState = (): GameData => {
   return {
-    history: getInitialHistoryState(),
+    history: getInitialBoardHistory(),
     start: getDateNow(),
     winner: null,
   }
@@ -73,31 +89,31 @@ const styles = {
 
 export const Game = () => {
   const [gameData, setGameData] = useState<GameData>(getInitialGameDataState())
-  const [history, setHistory] = useState<History[]>(getInitialHistoryState())
+  const [gameHistory, setGameHistory] = useState<GameHistory>(
+    getInitialGameHistoryState(),
+  )
 
-  const [isX, setIsX] = useState(true)
-  const [stepNumber, setStepNumber] = useState(0)
-  const [currentTurn, setCurrentTurn] = useState(history[0])
-  const [winner, setWinner] = useState<Winner | null>(null)
+  const { boardHistory, stepNumber, winner, isX } = gameHistory
+  const [currentTurn, setCurrentTurn] = useState(boardHistory[0])
 
   useMemo(() => {
     if (winner && !gameData.end) {
       setGameData({
         ...gameData,
-        history,
+        history: boardHistory,
         winner,
         end: getDateNow(),
       })
     }
-  }, [gameData, history, winner])
+  }, [boardHistory, gameData, winner])
 
   useMemo(() => {
-    setCurrentTurn(history[stepNumber])
-  }, [history, stepNumber])
+    setCurrentTurn(boardHistory[stepNumber])
+  }, [boardHistory, stepNumber])
 
   const handleClick = (i: number) => {
-    const newStateHistory = history.slice(0, stepNumber + 1)
-    const nextTurn = newStateHistory[history.length - 1]
+    const newStateHistory = boardHistory.slice(0, stepNumber + 1)
+    const nextTurn = newStateHistory[boardHistory.length - 1]
     const squares = nextTurn.squares.slice()
     if (winner || squares[i]) {
       return
@@ -105,23 +121,16 @@ export const Game = () => {
 
     squares[i] = getPlayer()
 
-    setHistory(
-      history.concat([
+    setGameHistory({
+      boardHistory: boardHistory.concat([
         {
           squares,
         },
       ]),
-    )
-
-    setStepNumber(history.length)
-
-    const calculatedWinner = calculateWinner(squares, stepNumber)
-
-    if (calculatedWinner) {
-      return setWinner(calculatedWinner)
-    }
-
-    setIsX(!isX)
+      stepNumber: stepNumber + 1,
+      winner: calculateWinner(squares, stepNumber),
+      isX: !isX,
+    })
   }
 
   const getPlayer = (): Player => {
@@ -140,10 +149,7 @@ export const Game = () => {
   }
 
   const reset = () => {
-    setStepNumber(0)
-    setIsX(true)
-    setHistory(getInitialHistoryState())
-    setWinner(null)
+    setGameHistory(getInitialGameHistoryState())
   }
 
   return (
