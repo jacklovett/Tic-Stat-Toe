@@ -1,13 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Text, Stack, IconButton } from 'office-ui-fabric-react'
 import * as commonStyles from './../styles'
 import { Board } from './Board'
+import { Player, SquareValue, Winner } from '../types'
 
-interface History {
-  squares: string[]
+interface BoardHistory {
+  squares: SquareValue[]
 }
 
-const getInitialHistoryState = () => {
+interface GameHistory {
+  boardHistory: BoardHistory[]
+  stepNumber: number
+  winner: Winner | null
+  isX: boolean
+}
+
+interface GameData {
+  history: BoardHistory[]
+  start: string
+  end?: string
+  winner: Winner | null
+}
+
+const getInitialBoardHistory = (): BoardHistory[] => {
   return [
     {
       squares: Array(9).fill(null),
@@ -15,7 +30,24 @@ const getInitialHistoryState = () => {
   ]
 }
 
-const calculateWinner = (squares: string[]) => {
+const getInitialGameHistoryState = (): GameHistory => {
+  return {
+    boardHistory: getInitialBoardHistory(),
+    stepNumber: 0,
+    winner: null,
+    isX: true,
+  }
+}
+
+const getInitialGameDataState = (): GameData => {
+  return {
+    history: getInitialBoardHistory(),
+    start: getDateNow(),
+    winner: null,
+  }
+}
+
+const calculateWinner = (squares: SquareValue[], stepNumber: number) => {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
@@ -27,14 +59,24 @@ const calculateWinner = (squares: string[]) => {
     [2, 4, 6],
   ]
 
-  let result = null
-  lines.forEach((line) => {
-    const [a, b, c] = line
+  let result: Winner | null = null
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i]
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       result = squares[a]
+      break
     }
-  })
+  }
+
+  if (!result && stepNumber > 7) {
+    result = 'DRAW'
+  }
+
   return result
+}
+
+const getDateNow = () => {
+  return new Date().toISOString().slice(0, 19)
 }
 
 const styles = {
@@ -46,60 +88,68 @@ const styles = {
 }
 
 export const Game = () => {
-  const [history, setHistory] = useState<History[]>(getInitialHistoryState())
+  const [gameData, setGameData] = useState<GameData>(getInitialGameDataState())
+  const [gameHistory, setGameHistory] = useState<GameHistory>(
+    getInitialGameHistoryState(),
+  )
 
-  const [isX, setIsX] = useState(true)
-  const [stepNumber, setStepNumber] = useState(0)
-  const [currentTurn, setCurrentTurn] = useState(history[0])
-  const [winner, setWinner] = useState(null)
+  const { boardHistory, stepNumber, winner, isX } = gameHistory
+  const [currentTurn, setCurrentTurn] = useState(boardHistory[0])
 
-  useEffect(() => {
-    setCurrentTurn(history[stepNumber])
-  }, [history, stepNumber])
+  useMemo(() => {
+    if (winner && !gameData.end) {
+      setGameData({
+        ...gameData,
+        history: boardHistory,
+        winner,
+        end: getDateNow(),
+      })
+    }
+  }, [boardHistory, gameData, winner])
 
-  useEffect(() => {
-    setWinner(calculateWinner(currentTurn.squares))
-  }, [currentTurn])
+  useMemo(() => {
+    setCurrentTurn(boardHistory[stepNumber])
+  }, [boardHistory, stepNumber])
 
   const handleClick = (i: number) => {
-    const newStateHistory = history.slice(0, stepNumber + 1)
-    const nextTurn = newStateHistory[history.length - 1]
+    const newStateHistory = boardHistory.slice(0, stepNumber + 1)
+    const nextTurn = newStateHistory[boardHistory.length - 1]
     const squares = nextTurn.squares.slice()
-    if (calculateWinner(squares) || squares[i]) {
+    if (winner || squares[i]) {
       return
     }
+
     squares[i] = getPlayer()
-    setHistory(
-      history.concat([
+
+    setGameHistory({
+      boardHistory: boardHistory.concat([
         {
           squares,
         },
       ]),
-    )
-    setStepNumber(history.length)
-    setIsX(!isX)
+      stepNumber: stepNumber + 1,
+      winner: calculateWinner(squares, stepNumber),
+      isX: !isX,
+    })
   }
 
-  const getPlayer = () => {
+  const getPlayer = (): Player => {
     return isX ? 'X' : 'O'
   }
 
   const getStatus = () => {
-    if (winner) {
-      return `Winner: ${winner}`
+    switch (winner) {
+      case null:
+        return `Next player: ${getPlayer()}`
+      case 'DRAW':
+        return `It's a draw!`
+      default:
+        return `Winner: ${winner}`
     }
-
-    if (!winner && stepNumber > 8) {
-      return `It's a draw!`
-    }
-
-    return `Next player: ${getPlayer()}`
   }
 
   const reset = () => {
-    setStepNumber(0)
-    setIsX(true)
-    setHistory(getInitialHistoryState())
+    setGameHistory(getInitialGameHistoryState())
   }
 
   return (

@@ -1,10 +1,12 @@
 import React from 'react'
 import { Stack, IStyle } from 'office-ui-fabric-react'
+
+import { SquareValue } from '../types'
 import { Square } from './Square'
 
 interface IBoardProps {
   selectSquare: (i: number) => void
-  squares: string[]
+  squares: SquareValue[]
 }
 
 const styles = {
@@ -24,7 +26,7 @@ const styles = {
 export const Board = (props: IBoardProps) => {
   const { selectSquare, squares } = props
 
-  function renderSquare(index: number) {
+  const renderSquare = (index: number) => {
     return (
       <Square id={index} value={squares[index]} selectSquare={selectSquare} />
     )
