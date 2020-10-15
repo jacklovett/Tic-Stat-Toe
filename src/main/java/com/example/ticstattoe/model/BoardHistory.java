@@ -1,9 +1,6 @@
 package com.example.ticstattoe.model;
 
 import java.io.Serializable;
-import java.util.List;
-
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,8 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.example.ticstattoe.enums.Square;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -34,8 +30,16 @@ public class BoardHistory implements Serializable {
   @JoinColumn(name = "game_id")
   private Game game;
 
-  @ElementCollection
-  private List<Square> history;
+  private int turn;
+
+  @NotBlank
+  private String squares;
+
+  public BoardHistory(Game game, int turn, String squares) {
+    this.game = game;
+    this.turn = turn;
+    this.squares = squares;
+  }
 
   public Game getGame() {
     return game;
@@ -45,11 +49,20 @@ public class BoardHistory implements Serializable {
     this.game = game;
   }
 
-  public List<Square> getHistory() {
-    return history;
+  public String getSquares() {
+    return squares;
   }
 
-  public void setHistory(List<Square> history) {
-    this.history = history;
+  public void setSquares(String squares) {
+    this.squares = squares;
   }
+
+  public int getTurn() {
+    return turn;
+  }
+
+  public void setTurn(int turn) {
+    this.turn = turn;
+  }
+
 }

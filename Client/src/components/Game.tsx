@@ -16,9 +16,9 @@ interface GameHistory {
 }
 
 interface GameData {
-  history: BoardHistory[]
-  start: string
-  end?: string
+  boardHistory: BoardHistory[]
+  start: Date
+  end?: Date
   winner: Winner | null
 }
 
@@ -41,8 +41,8 @@ const getInitialGameHistoryState = (): GameHistory => {
 
 const getInitialGameDataState = (): GameData => {
   return {
-    history: getInitialBoardHistory(),
-    start: getDateNow(),
+    boardHistory: getInitialBoardHistory(),
+    start: new Date(),
     winner: null,
   }
 }
@@ -75,10 +75,6 @@ const calculateWinner = (squares: SquareValue[], stepNumber: number) => {
   return result
 }
 
-const getDateNow = () => {
-  return new Date().toISOString().slice(0, 19)
-}
-
 const styles = {
   gameInfo: {
     root: {
@@ -88,6 +84,7 @@ const styles = {
 }
 
 export const Game = () => {
+  // TODO: Remove first row of board history - no need for array of nulls
   const [gameData, setGameData] = useState<GameData>(getInitialGameDataState())
   const [gameHistory, setGameHistory] = useState<GameHistory>(
     getInitialGameHistoryState(),
@@ -100,9 +97,9 @@ export const Game = () => {
     if (winner && !gameData.end) {
       setGameData({
         ...gameData,
-        history: boardHistory,
+        boardHistory,
         winner,
-        end: getDateNow(),
+        end: new Date(),
       })
     }
   }, [boardHistory, gameData, winner])

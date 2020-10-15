@@ -34,17 +34,15 @@ public class Game implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
-  @Column(name = "start_time")
+  @Column(name = "start_time", nullable = false)
   private Instant start;
 
-  @NotBlank
-  @Column(name = "end_time")
+  @Column(name = "end_time", nullable = false)
   private Instant end;
 
   @NotBlank
   @Size(max = 4)
-  private Winner winner;
+  private String winner;
 
   @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<BoardHistory> boardHistory;
@@ -53,9 +51,9 @@ public class Game implements Serializable {
   }
 
   public Game(GameRequest gameRequest) {
-    this.start = gameRequest.getStart();
-    this.end = gameRequest.getEnd();
-    this.winner = gameRequest.getWinner();
+    this.setStart(gameRequest.getStart());
+    this.setEnd(gameRequest.getEnd());
+    this.setWinner(gameRequest.getWinner());
   }
 
   public Long getId() {
@@ -82,12 +80,12 @@ public class Game implements Serializable {
     this.end = end;
   }
 
-  public Winner getWinner() {
+  public String getWinner() {
     return winner;
   }
 
   public void setWinner(Winner winner) {
-    this.winner = winner;
+    this.winner = winner.toString();
   }
 
 }
