@@ -39,14 +39,6 @@ const getInitialGameHistoryState = (): GameHistory => {
   }
 }
 
-const getInitialGameDataState = (): GameData => {
-  return {
-    boardHistory: getInitialBoardHistory(),
-    start: new Date(),
-    winner: null,
-  }
-}
-
 const calculateWinner = (squares: SquareValue[], stepNumber: number) => {
   const lines = [
     [0, 1, 2],
@@ -83,9 +75,11 @@ const styles = {
   },
 }
 
+const saveGameData = (gameData: GameData) => {}
+
 export const Game = () => {
-  // TODO: Remove first row of board history - no need for array of nulls
-  const [gameData, setGameData] = useState<GameData>(getInitialGameDataState())
+  const [start, setStart] = useState<Date>(new Date())
+
   const [gameHistory, setGameHistory] = useState<GameHistory>(
     getInitialGameHistoryState(),
   )
@@ -94,21 +88,15 @@ export const Game = () => {
   const [currentTurn, setCurrentTurn] = useState(boardHistory[0])
 
   useMemo(() => {
-    if (winner && !gameData.end) {
-      setGameData({
-        ...gameData,
-        boardHistory,
-        winner,
-        end: new Date(),
-      })
-    }
-  }, [boardHistory, gameData, winner])
-
-  useMemo(() => {
     setCurrentTurn(boardHistory[stepNumber])
   }, [boardHistory, stepNumber])
 
   const handleClick = (i: number) => {
+    // First box has been selected, set start time
+    if (stepNumber === 0) {
+      setStart(new Date())
+    }
+
     const newStateHistory = boardHistory.slice(0, stepNumber + 1)
     const nextTurn = newStateHistory[boardHistory.length - 1]
     const squares = nextTurn.squares.slice()
@@ -118,6 +106,8 @@ export const Game = () => {
 
     squares[i] = getPlayer()
 
+    const calculatedWinner = calculateWinner(squares, stepNumber)
+
     setGameHistory({
       boardHistory: boardHistory.concat([
         {
@@ -125,9 +115,18 @@ export const Game = () => {
         },
       ]),
       stepNumber: stepNumber + 1,
-      winner: calculateWinner(squares, stepNumber),
+      winner: calculatedWinner,
       isX: !isX,
     })
+
+    if (calculatedWinner) {
+      saveGameData({
+        boardHistory,
+        winner,
+        start,
+        end: new Date(),
+      })
+    }
   }
 
   const getPlayer = (): Player => {
