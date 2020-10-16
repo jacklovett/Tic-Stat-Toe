@@ -16,11 +16,14 @@ import com.example.ticstattoe.requests.BoardHistoryRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api")
 public class GameController {
 
   @Autowired
@@ -34,11 +37,12 @@ public class GameController {
 
   private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
-  @PostMapping("/")
-  public void saveGame(@Valid @RequestBody GameRequest gameRequest) {
+  @PostMapping("/game")
+  public ResponseEntity<String> saveGame(@Valid @RequestBody GameRequest gameRequest) {
     logger.info("GameController - saveGame - init");
     Game game = new Game(gameRequest);
     // TODO: Cancel all if one addition to database fails
+
     Game savedGame = gameRepository.save(game);
 
     List<BoardHistoryRequest> boardHistory = gameRequest.getBoardHistory();
@@ -50,5 +54,7 @@ public class GameController {
 
       boardHistoryRepository.save(new BoardHistory(savedGame, index, turnHistoryJSON));
     }
+
+    return ResponseEntity.ok("Game results saved successfully!");
   }
 }

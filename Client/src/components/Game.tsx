@@ -2,7 +2,14 @@ import React, { useMemo, useState } from 'react'
 import { Text, Stack, IconButton } from 'office-ui-fabric-react'
 import * as commonStyles from './../styles'
 import { Board } from './Board'
-import { Player, SquareValue, Winner } from '../types'
+import {
+  BoardHistory,
+  GameHistory,
+  Player,
+  SquareValue,
+  Winner,
+} from '../types'
+import { saveGameData } from '../services/httpService'
 
 const styles = {
   gameInfo: {
@@ -10,25 +17,6 @@ const styles = {
       minWidth: 160,
     },
   },
-}
-
-interface BoardHistory {
-  squares: SquareValue[]
-}
-
-interface GameHistory {
-  boardHistory: BoardHistory[]
-  stepNumber: number
-  winner: Winner | null
-  isX: boolean
-  currentBoardState: BoardHistory
-}
-
-interface GameData {
-  boardHistory: BoardHistory[]
-  start: Date
-  end?: Date
-  winner: Winner | null
 }
 
 const getInitialBoardState = (): BoardHistory => {
@@ -78,10 +66,6 @@ const calculateWinner = (squares: SquareValue[], stepNumber: number) => {
 const formatBoardHistory = (boardHistory: BoardHistory[]) => {
   // Remove empty initial board state
   return boardHistory.splice(1, boardHistory.length)
-}
-
-const saveGameData = (gameData: GameData) => {
-  console.log(gameData)
 }
 
 export const Game = () => {
