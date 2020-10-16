@@ -1,49 +1,37 @@
-import React, { useState, useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Text, Stack, IconButton } from 'office-ui-fabric-react'
 import * as commonStyles from './../styles'
 import { Board } from './Board'
-import { Player, SquareValue, Winner } from '../types'
+import {
+  BoardHistory,
+  GameHistory,
+  Player,
+  SquareValue,
+  Winner,
+} from '../types'
+import { saveGameData } from '../services/httpService'
 
-interface BoardHistory {
-  squares: SquareValue[]
-}
-
-interface GameHistory {
-  boardHistory: BoardHistory[]
-  stepNumber: number
-  winner: Winner | null
-  isX: boolean
-}
-
-interface GameData {
-  boardHistory: BoardHistory[]
-  start: Date
-  end?: Date
-  winner: Winner | null
-}
-
-const getInitialBoardHistory = (): BoardHistory[] => {
-  return [
-    {
-      squares: Array(9).fill(null),
+const styles = {
+  gameInfo: {
+    root: {
+      minWidth: 160,
     },
-  ]
+  },
+}
+
+const getInitialBoardState = (): BoardHistory => {
+  return {
+    squares: Array(9).fill(null),
+  }
 }
 
 const getInitialGameHistoryState = (): GameHistory => {
   return {
-    boardHistory: getInitialBoardHistory(),
+    boardHistory: [getInitialBoardState()],
+    currentBoardState: getInitialBoardState(),
     stepNumber: 0,
     winner: null,
     isX: true,
-  }
-}
-
-const getInitialGameDataState = (): GameData => {
-  return {
-    boardHistory: getInitialBoardHistory(),
-    start: new Date(),
-    winner: null,
   }
 }
 
@@ -75,40 +63,42 @@ const calculateWinner = (squares: SquareValue[], stepNumber: number) => {
   return result
 }
 
-const styles = {
-  gameInfo: {
-    root: {
-      minWidth: 160,
-    },
-  },
+const formatBoardHistory = (boardHistory: BoardHistory[]) => {
+  // Remove empty initial board state
+  return boardHistory.splice(1, boardHistory.length)
 }
 
 export const Game = () => {
-  // TODO: Remove first row of board history - no need for array of nulls
-  const [gameData, setGameData] = useState<GameData>(getInitialGameDataState())
+  const [start, setStart] = useState<Date>(new Date())
   const [gameHistory, setGameHistory] = useState<GameHistory>(
     getInitialGameHistoryState(),
   )
 
-  const { boardHistory, stepNumber, winner, isX } = gameHistory
-  const [currentTurn, setCurrentTurn] = useState(boardHistory[0])
+  const {
+    boardHistory,
+    currentBoardState,
+    stepNumber,
+    winner,
+    isX,
+  } = gameHistory
 
   useMemo(() => {
-    if (winner && !gameData.end) {
-      setGameData({
-        ...gameData,
-        boardHistory,
+    if (winner) {
+      saveGameData({
+        boardHistory: formatBoardHistory(boardHistory),
         winner,
+        start,
         end: new Date(),
       })
     }
-  }, [boardHistory, gameData, winner])
-
-  useMemo(() => {
-    setCurrentTurn(boardHistory[stepNumber])
-  }, [boardHistory, stepNumber])
+  }, [boardHistory, winner, start])
 
   const handleClick = (i: number) => {
+    // First box has been selected, set start time
+    if (stepNumber === 0) {
+      setStart(new Date())
+    }
+
     const newStateHistory = boardHistory.slice(0, stepNumber + 1)
     const nextTurn = newStateHistory[boardHistory.length - 1]
     const squares = nextTurn.squares.slice()
@@ -118,12 +108,13 @@ export const Game = () => {
 
     squares[i] = getPlayer()
 
+    const newBoardState = {
+      squares,
+    }
+
     setGameHistory({
-      boardHistory: boardHistory.concat([
-        {
-          squares,
-        },
-      ]),
+      boardHistory: boardHistory.concat([newBoardState]),
+      currentBoardState: newBoardState,
       stepNumber: stepNumber + 1,
       winner: calculateWinner(squares, stepNumber),
       isX: !isX,
@@ -158,7 +149,7 @@ export const Game = () => {
         tokens={{ childrenGap: 20 }}
       >
         <Board
-          squares={currentTurn?.squares}
+          squares={currentBoardState?.squares}
           selectSquare={(i: number) => handleClick(i)}
         />
         <Stack
