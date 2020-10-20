@@ -1,0 +1,54 @@
+import React from 'react'
+import { Stack, IStyle } from 'office-ui-fabric-react'
+
+import { SquareValue } from '../types'
+import { Square } from './Square'
+
+interface IBoardProps {
+  selectSquare: (i: number) => void
+  squares: SquareValue[]
+}
+
+const styles = {
+  boardRow: {
+    root: {
+      selectors: {
+        ':after': {
+          clear: 'both',
+          display: 'table',
+          content: '',
+        },
+      },
+    } as IStyle,
+  },
+}
+
+export const Board = (props: IBoardProps) => {
+  const { selectSquare, squares } = props
+
+  const renderSquare = (index: number) => {
+    return (
+      <Square id={index} value={squares[index]} selectSquare={selectSquare} />
+    )
+  }
+
+  return (
+    <Stack>
+      <Stack horizontal styles={styles.boardRow}>
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
+      </Stack>
+      <Stack horizontal styles={styles.boardRow}>
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+      </Stack>
+      <Stack horizontal styles={styles.boardRow}>
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
+      </Stack>
+    </Stack>
+  )
+}
