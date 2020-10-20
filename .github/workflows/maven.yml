@@ -16,15 +16,15 @@ jobs:
     # runs all of the steps inside the specified container rather than on the VM host.
     # Because of this the network configuration changes from host based network to a container network.
     container:
-      image:  java:14
+      image: openjdk:14.0.2-buster
 
     services:
       postgres:
-        image: postgres:10.8
+        image: postgres:9.6
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: developer
+          POSTGRES_DB: TicStatToe
         ports:
         - 5432:5432
         # needed because the postgres container does not provide a healthcheck
