@@ -11,13 +11,10 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:9.6-alpine
-        env:
+    docker: # run the steps with Docker
+      - image: circleci/openjdk:14.0.2-buster # ...with this image as the primary container; this is where all `steps` will run
+      - image: circleci/postgres:9.6-alpine
+        environment:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: developer
           POSTGRES_DB: TicStatToe
