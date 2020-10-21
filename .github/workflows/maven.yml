@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  runner-job:
+  build:
     runs-on: ubuntu-latest
 
     services:
