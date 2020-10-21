@@ -1,17 +1,17 @@
-package com.example.ticstattoe.controller;
+package com.lovettj.ticstattoe.controller;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
-import com.example.ticstattoe.enums.Square;
-import com.example.ticstattoe.model.BoardHistory;
-import com.example.ticstattoe.model.Game;
-import com.example.ticstattoe.repository.BoardHistoryRepository;
-import com.example.ticstattoe.repository.GameRepository;
-import com.example.ticstattoe.requests.GameRequest;
 import com.google.gson.Gson;
-import com.example.ticstattoe.requests.BoardHistoryRequest;
+import com.lovettj.ticstattoe.enums.Square;
+import com.lovettj.ticstattoe.model.BoardHistory;
+import com.lovettj.ticstattoe.model.Game;
+import com.lovettj.ticstattoe.repository.BoardHistoryRepository;
+import com.lovettj.ticstattoe.repository.GameRepository;
+import com.lovettj.ticstattoe.requests.BoardHistoryRequest;
+import com.lovettj.ticstattoe.requests.GameRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

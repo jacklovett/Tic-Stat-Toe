@@ -1,6 +1,6 @@
-package com.example.ticstattoe.repository;
+package com.lovettj.ticstattoe.repository;
 
-import com.example.ticstattoe.model.BoardHistory;
+import com.lovettj.ticstattoe.model.BoardHistory;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

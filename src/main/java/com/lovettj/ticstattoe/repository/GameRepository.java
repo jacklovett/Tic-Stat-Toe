@@ -1,8 +1,8 @@
-package com.example.ticstattoe.repository;
+package com.lovettj.ticstattoe.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.example.ticstattoe.model.Game;
+import com.lovettj.ticstattoe.model.Game;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

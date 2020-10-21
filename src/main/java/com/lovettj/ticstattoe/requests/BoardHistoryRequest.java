@@ -1,8 +1,8 @@
-package com.example.ticstattoe.requests;
+package com.lovettj.ticstattoe.requests;
 
 import java.util.List;
 
-import com.example.ticstattoe.enums.Square;
+import com.lovettj.ticstattoe.enums.Square;
 
 public class BoardHistoryRequest {
 
