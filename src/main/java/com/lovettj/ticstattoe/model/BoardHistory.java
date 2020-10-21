@@ -1,4 +1,4 @@
-package com.example.ticstattoe.model;
+package com.lovettj.ticstattoe.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;

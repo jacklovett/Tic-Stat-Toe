@@ -1,4 +1,4 @@
-package com.example.ticstattoe.model;
+package com.lovettj.ticstattoe.model;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -16,8 +16,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.example.ticstattoe.enums.Winner;
-import com.example.ticstattoe.requests.GameRequest;
+import com.lovettj.ticstattoe.enums.Winner;
+import com.lovettj.ticstattoe.requests.GameRequest;
 
 /**
  * 

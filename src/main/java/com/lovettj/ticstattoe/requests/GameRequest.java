@@ -1,9 +1,9 @@
-package com.example.ticstattoe.requests;
+package com.lovettj.ticstattoe.requests;
 
 import java.time.Instant;
 import java.util.List;
 
-import com.example.ticstattoe.enums.Winner;
+import com.lovettj.ticstattoe.enums.Winner;
 
 public class GameRequest {
 

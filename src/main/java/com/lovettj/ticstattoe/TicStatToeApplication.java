@@ -1,4 +1,4 @@
-package com.example.ticstattoe;
+package com.lovettj.ticstattoe;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
