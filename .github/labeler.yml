@@ -1,3 +1,5 @@
 frontend: client/**/*
 
 backend: src/**/*
+
+CI/CD: .github/workflows/**/*
