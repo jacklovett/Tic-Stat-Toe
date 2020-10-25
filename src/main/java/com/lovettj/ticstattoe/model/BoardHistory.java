@@ -1,6 +1,7 @@
 package com.lovettj.ticstattoe.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,9 +37,9 @@ public class BoardHistory implements Serializable {
   private String squares;
 
   public BoardHistory(Game game, int turn, String squares) {
-    this.game = game;
-    this.turn = turn;
-    this.squares = squares;
+    this.setGame(game);
+    this.setTurn(turn);
+    this.setSquares(squares);
   }
 
   public Game getGame() {
