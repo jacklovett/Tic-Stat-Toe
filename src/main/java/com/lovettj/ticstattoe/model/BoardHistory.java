@@ -42,6 +42,14 @@ public class BoardHistory implements Serializable {
     this.setSquares(squares);
   }
 
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
   public Game getGame() {
     return game;
   }

@@ -17,6 +17,7 @@ import com.lovettj.ticstattoe.model.Game;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -24,19 +25,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
-public class GameRepositoryTests {
+public class BoardHistoryRepositoryTests {
 
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
 
   private Game game;
   private List<Square> squares;
-  private List<BoardHistory> history;
+  private BoardHistory boardHistory;
 
   @Autowired
   private TestEntityManager entityManager;
 
   @Autowired
-  private GameRepository gameRepository;
+  private BoardHistoryRepository boardHistoryRepository;
 
   @Before
   public void setUp() {
@@ -49,33 +50,28 @@ public class GameRepositoryTests {
     squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);
 
-    BoardHistory boardHistory = new BoardHistory(game, 1, squares.toString());
-
-    history = new ArrayList<BoardHistory>();
-    history.add(boardHistory);
-
-    game.setBoardHistory(history);
+    boardHistory = new BoardHistory(game, 1, squares.toString());
 
   }
 
   @Test
-  public void saveShouldSaveGameSuccessfully() {
-    gameRepository.save(game);
-    assertNotNull(game.getId());
+  public void saveShouldSaveBoardHistorySuccessfully() {
+    boardHistoryRepository.save(boardHistory);
+    assertNotNull(boardHistory.getId());
   }
 
   @Test
-  public void findAllShouldReturnListOfGames() {
+  public void findAllShouldReturnListOfBoardHistory() {
 
     entityManager.persist(game);
+    entityManager.persist(boardHistory);
     entityManager.flush();
 
-    List<Game> foundGames = gameRepository.findAll();
+    List<BoardHistory> foundboardHistory = boardHistoryRepository.findAll();
 
-    assertNotNull(foundGames);
-    assertFalse(foundGames.isEmpty());
-    assertEquals(Winner.X.toString(), foundGames.get(0).getWinner());
-    assertEquals(history, foundGames.get(0).getBoardHistory());
+    assertNotNull(foundboardHistory);
+    assertFalse(foundboardHistory.isEmpty());
+    assertEquals(squares.toString(), foundboardHistory.get(0).getSquares());
   }
 
 }
