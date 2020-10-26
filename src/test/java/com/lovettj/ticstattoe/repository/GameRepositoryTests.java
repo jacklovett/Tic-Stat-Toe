@@ -29,7 +29,6 @@ public class GameRepositoryTests {
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
 
   private Game game;
-  private List<Square> squares;
   private List<BoardHistory> history;
 
   @Autowired
@@ -46,7 +45,7 @@ public class GameRepositoryTests {
     game.setEnd(Instant.now());
     game.setWinner(Winner.X);
 
-    squares = new ArrayList<Square>();
+    List<Square> squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);
 
     BoardHistory boardHistory = new BoardHistory(game, 1, squares.toString());

@@ -35,7 +35,6 @@ public class GameServiceTests {
 
   private Game game;
   private GameRequest gameRequest;
-  private List<BoardHistoryRequest> boardHistoryRequests;
 
   @Mock
   private GameRepository gameRepository;
@@ -53,7 +52,7 @@ public class GameServiceTests {
     BoardHistoryRequest boardHistoryRequest = new BoardHistoryRequest();
     boardHistoryRequest.setSquares(squares);
 
-    boardHistoryRequests = new ArrayList<BoardHistoryRequest>();
+    List<BoardHistoryRequest> boardHistoryRequests = new ArrayList<BoardHistoryRequest>();
     boardHistoryRequests.add(boardHistoryRequest);
     boardHistoryRequests.add(boardHistoryRequest);
 
