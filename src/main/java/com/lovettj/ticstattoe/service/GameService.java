@@ -17,8 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameService {
 
-  @Autowired
-  private Gson gson;
+  private Gson gson = new Gson();
 
   @Autowired
   private GameRepository gameRepository;
@@ -32,7 +31,6 @@ public class GameService {
     List<BoardHistoryRequest> boardHistory = gameRequest.getBoardHistory();
 
     saveBoardHistory(boardHistory, savedGame);
-
   }
 
   private Game saveGame(GameRequest gameRequest) {
@@ -41,13 +39,12 @@ public class GameService {
     return gameRepository.save(game);
   }
 
-  private void saveBoardHistory(List<BoardHistoryRequest> boardHistory, Game savedGame) {
-    for (int index = 0; index < boardHistory.size(); index++) {
-
-      List<Square> turnHistory = boardHistory.get(index).getSquares();
+  private void saveBoardHistory(List<BoardHistoryRequest> history, Game savedGame) {
+    for (int index = 0; index < history.size(); index++) {
+      List<Square> turnHistory = history.get(index).getSquares();
       String turnHistoryJSON = gson.toJson(turnHistory);
-
-      boardHistoryRepository.save(new BoardHistory(savedGame, index, turnHistoryJSON));
+      BoardHistory boardHistory = new BoardHistory(savedGame, index, turnHistoryJSON);
+      boardHistoryRepository.save(boardHistory);
     }
 
   }
