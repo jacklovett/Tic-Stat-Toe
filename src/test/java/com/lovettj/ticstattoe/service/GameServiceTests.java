@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
@@ -27,7 +28,7 @@ import com.lovettj.ticstattoe.repository.GameRepository;
 import com.lovettj.ticstattoe.requests.BoardHistoryRequest;
 import com.lovettj.ticstattoe.requests.GameRequest;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class GameServiceTests {
 
   private static final Long ID = 1l;
@@ -43,8 +44,8 @@ public class GameServiceTests {
   @InjectMocks
   private GameService gameService;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  public void init() {
 
     List<Square> squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);

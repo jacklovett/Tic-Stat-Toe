@@ -1,6 +1,10 @@
 package com.lovettj.ticstattoe.controller;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 
 import java.time.Instant;
@@ -17,22 +21,19 @@ import com.lovettj.ticstattoe.requests.GameRequest;
 import com.lovettj.ticstattoe.service.GameService;
 import com.lovettj.ticstattoe.utils.InstantConverter;
 
-import org.junit.runner.RunWith;
-import org.junit.Before;
-import org.junit.Test;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 @WebMvcTest(GameController.class)
 public class GameControllerTests {
 
@@ -48,8 +49,8 @@ public class GameControllerTests {
   @MockBean
   private GameService gameService;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  public void init() {
 
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.registerTypeAdapter(Instant.class, new InstantConverter());

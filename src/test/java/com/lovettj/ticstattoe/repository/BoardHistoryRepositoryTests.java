@@ -1,8 +1,8 @@
 package com.lovettj.ticstattoe.repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -14,16 +14,13 @@ import com.lovettj.ticstattoe.enums.Winner;
 import com.lovettj.ticstattoe.model.BoardHistory;
 import com.lovettj.ticstattoe.model.Game;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
 public class BoardHistoryRepositoryTests {
 
@@ -39,8 +36,8 @@ public class BoardHistoryRepositoryTests {
   @Autowired
   private BoardHistoryRepository boardHistoryRepository;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  public void init() {
 
     game = new Game();
     game.setStart(Instant.now());
