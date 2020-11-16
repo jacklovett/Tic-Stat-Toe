@@ -88,4 +88,12 @@ public class Game implements Serializable {
     this.winner = winner.toString();
   }
 
+  public List<BoardHistory> getBoardHistory() {
+    return boardHistory;
+  }
+
+  public void setBoardHistory(List<BoardHistory> boardHistory) {
+    this.boardHistory = boardHistory;
+  }
+
 }

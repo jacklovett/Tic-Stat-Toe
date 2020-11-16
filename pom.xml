@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>14</java.version>
 		<node.version>v14.13.1</node.version>
 		<yarn.version>v1.22.5</yarn.version>
@@ -51,11 +52,25 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-				<groupId>com.google.code.gson</groupId>
-				<artifactId>gson</artifactId>
-				<version>2.8.6</version>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.6</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -74,7 +89,6 @@
 					<nodeVersion>${node.version}</nodeVersion>
 					<yarnVersion>${yarn.version}</yarnVersion>
 				</configuration>
- 
 				<executions>
 					<execution>
 						<id>install node and yarn</id>
@@ -82,14 +96,12 @@
 							<goal>install-node-and-yarn</goal>
 						</goals>
 					</execution>
- 
 					<execution>
 						<id>yarn install</id>
 						<goals>
 							<goal>yarn</goal>
 						</goals>
 						<configuration>
-							<!-- this calls yarn install -->
 							<arguments>install</arguments>
 						</configuration>
 					</execution>
@@ -99,7 +111,6 @@
 							<goal>yarn</goal>
 						</goals>
 						<configuration>
-            	 <!-- this calls yarn build -->
 							<arguments>build</arguments>
 						</configuration>
 					</execution>
@@ -125,12 +136,11 @@
 		</plugin>
 		<plugin>
       <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-          <configuration>
-           <testFailureIgnore>true</testFailureIgnore>
-          </configuration>
-      </plugin>
+      <artifactId>maven-surefire-plugin</artifactId>
+      <configuration>
+				<forkCount>0</forkCount>
+      </configuration>
+    </plugin>
 		</plugins>
 	</build>
-
 </project>
