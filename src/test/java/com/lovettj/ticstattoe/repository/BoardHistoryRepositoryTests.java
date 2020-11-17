@@ -66,8 +66,6 @@ public class BoardHistoryRepositoryTests {
 
     List<BoardHistory> foundboardHistory = boardHistoryRepository.findAll();
 
-    assertNotNull(foundboardHistory);
-    assertFalse(foundboardHistory.isEmpty());
     assertEquals(squares.toString(), foundboardHistory.get(0).getSquares());
   }
 

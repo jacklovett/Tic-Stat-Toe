@@ -69,8 +69,6 @@ public class GameRepositoryTests {
 
     List<Game> foundGames = gameRepository.findAll();
 
-    assertNotNull(foundGames);
-    assertFalse(foundGames.isEmpty());
     assertEquals(Winner.X.toString(), foundGames.get(0).getWinner());
     assertEquals(history, foundGames.get(0).getBoardHistory());
   }
