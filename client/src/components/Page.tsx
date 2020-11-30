@@ -11,7 +11,7 @@ export const Page = (props: IProps) => {
   return (
     <Stack grow verticalFill>
       {header}
-      <Stack grow tokens={{ padding: 20 }}>
+      <Stack grow horizontalAlign="center" tokens={{ padding: 20 }}>
         {body}
       </Stack>
     </Stack>
