@@ -3,10 +3,12 @@ package com.lovettj.ticstattoe.controller;
 import javax.validation.Valid;
 
 import com.lovettj.ticstattoe.requests.GameRequest;
+import com.lovettj.ticstattoe.responses.Stats;
 import com.lovettj.ticstattoe.service.GameService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,11 @@ public class GameController {
   public ResponseEntity<String> saveGame(@Valid @RequestBody GameRequest gameRequest) {
     gameService.save(gameRequest);
     return ResponseEntity.ok("Game results saved successfully!");
+  }
+
+  @GetMapping("/stats")
+  public ResponseEntity<Stats> getStats() {
+    return ResponseEntity.ok(new Stats(1l));
   }
 
 }
