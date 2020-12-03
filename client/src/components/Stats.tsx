@@ -1,7 +1,9 @@
 import { Spinner, SpinnerSize, Stack } from 'office-ui-fabric-react'
 import React, { useMemo, useState } from 'react'
+import { dataTransformer, StatItem, StatData } from '../models/Statistics'
 import { http } from '../services/httpService'
-import { Statistics } from '../types'
+import { ListItem } from './ListItem'
+import { Title } from './Title'
 
 const styles = {
   wrapper: {
@@ -12,27 +14,39 @@ const styles = {
   statsPanel: {
     root: {
       width: '100%',
-      maxWidth: 600,
+      maxWidth: 500,
       padding: 20,
       background: '#ffffff',
       borderRadius: 5,
+    },
+  },
+  title: {
+    root: {
+      paddingBottom: 20,
+      borderBottom: 'solid 1px #d9d9d9',
+    },
+  },
+  statsWrapper: {
+    root: {
+      height: '100%',
+      overflowY: 'auto',
     },
   },
 }
 
 export const Stats = () => {
   const [isLoading, setLoading] = useState<boolean>(false)
-  const [statistics, setStatistics] = useState<Statistics | null>(null)
+  const [statistics, setStatistics] = useState<StatItem[] | null>(null)
 
   useMemo(() => {
     setLoading(true)
-    http<Statistics>('/api/stats')
-      .then((data: Statistics) => setStatistics(data))
+
+    http<StatData>('/api/stats')
+      .then((data: StatData) => setStatistics(dataTransformer(data)))
       .catch((error) => console.error(error))
+
     setLoading(false)
   }, [setStatistics, setLoading])
-
-  const displayStatistics = !isLoading && statistics
 
   return (
     <Stack
@@ -43,7 +57,24 @@ export const Stats = () => {
       verticalFill
     >
       {isLoading && <Spinner size={SpinnerSize.large} />}
-      {displayStatistics && <Stack grow styles={styles.statsPanel}></Stack>}
+      {statistics && (
+        <Stack grow styles={styles.statsPanel}>
+          <Stack styles={styles.title}>
+            <Title label="Game Statistics" />
+          </Stack>
+          <Stack styles={styles.statsWrapper}>
+            {statistics.map((statistic: StatItem) => {
+              return (
+                <ListItem
+                  key={statistic.key}
+                  label={statistic.label}
+                  value={`${statistic.value}`}
+                />
+              )
+            })}
+          </Stack>
+        </Stack>
+      )}
     </Stack>
   )
 }
