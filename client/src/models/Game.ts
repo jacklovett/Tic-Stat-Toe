@@ -23,7 +23,3 @@ export type GameData = {
   end?: Date
   winner: Winner
 }
-
-export type Statistics = {
-  gameCount: number
-}

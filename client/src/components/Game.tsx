@@ -9,13 +9,14 @@ import {
   Player,
   SquareValue,
   Winner,
-} from '../types'
+} from '../models/Game'
 import { httpPost } from '../services/httpService'
 
 const styles = {
   gameInfo: {
     root: {
       minWidth: 160,
+      color: '#ffffff',
     },
   },
 }
