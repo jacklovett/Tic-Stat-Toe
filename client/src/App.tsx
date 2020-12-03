@@ -9,9 +9,9 @@ const styles = {
   app: {
     root: {
       background: '#282c34',
+      color: '#0d0d0d',
       minHeight: '100vh',
       height: '100%',
-      color: '#ffffff',
     },
   },
 }
