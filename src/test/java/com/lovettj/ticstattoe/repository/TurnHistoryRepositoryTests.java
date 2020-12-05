@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.lovettj.ticstattoe.enums.Square;
 import com.lovettj.ticstattoe.enums.Winner;
-import com.lovettj.ticstattoe.model.BoardHistory;
+import com.lovettj.ticstattoe.model.Turn;
 import com.lovettj.ticstattoe.model.Game;
 
 import org.junit.jupiter.api.Test;
@@ -21,19 +21,19 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 @DataJpaTest
-class BoardHistoryRepositoryTests {
+class TurnRepositoryTests {
 
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
 
   private Game game;
   private List<Square> squares;
-  private BoardHistory boardHistory;
+  private Turn turn;
 
   @Autowired
   private TestEntityManager entityManager;
 
   @Autowired
-  private BoardHistoryRepository boardHistoryRepository;
+  private TurnRepository turnRepository;
 
   @BeforeEach
   void init() {
@@ -46,26 +46,26 @@ class BoardHistoryRepositoryTests {
     squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);
 
-    boardHistory = new BoardHistory(game, 1, squares.toString());
+    turn = new Turn(game, 1, 0, squares.toString());
 
   }
 
   @Test
-  void saveShouldSaveBoardHistorySuccessfully() {
-    boardHistoryRepository.save(boardHistory);
-    assertNotNull(boardHistory.getId());
+  void saveShouldSaveTurnSuccessfully() {
+    turnRepository.save(turn);
+    assertNotNull(turn.getId());
   }
 
   @Test
-  void findAllShouldReturnListOfBoardHistory() {
+  void findAllShouldReturnListOfTurn() {
 
     entityManager.persist(game);
-    entityManager.persist(boardHistory);
+    entityManager.persist(turn);
     entityManager.flush();
 
-    List<BoardHistory> foundboardHistory = boardHistoryRepository.findAll();
+    List<Turn> foundboardHistory = turnRepository.findAll();
 
-    assertEquals(squares.toString(), foundboardHistory.get(0).getSquares());
+    assertEquals(squares.toString(), foundboardHistory.get(0).getBoardHistory());
   }
 
 }

@@ -16,8 +16,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lovettj.ticstattoe.enums.Square;
 import com.lovettj.ticstattoe.enums.Winner;
-import com.lovettj.ticstattoe.requests.BoardHistoryRequest;
 import com.lovettj.ticstattoe.requests.GameRequest;
+import com.lovettj.ticstattoe.requests.TurnRequest;
 import com.lovettj.ticstattoe.responses.Stats;
 import com.lovettj.ticstattoe.service.GameService;
 import com.lovettj.ticstattoe.utils.InstantConverter;
@@ -63,17 +63,18 @@ class GameControllerTests {
     List<Square> squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);
 
-    BoardHistoryRequest boardHistoryRequest = new BoardHistoryRequest();
-    boardHistoryRequest.setSquares(squares);
+    TurnRequest turnRequest = new TurnRequest();
+    turnRequest.setBoardHistory(squares);
+    turnRequest.setSelectedSquare(0);
 
-    List<BoardHistoryRequest> boardHistory = new ArrayList<BoardHistoryRequest>();
-    boardHistory.add(boardHistoryRequest);
+    List<TurnRequest> turns = new ArrayList<TurnRequest>();
+    turns.add(turnRequest);
 
     gameRequest = new GameRequest();
     gameRequest.setStart(Instant.now());
     gameRequest.setEnd(Instant.now());
     gameRequest.setWinner(Winner.X);
-    gameRequest.setBoardHistory(boardHistory);
+    gameRequest.setTurns(turns);
 
     stats = new Stats(1l);
   }
@@ -102,8 +103,7 @@ class GameControllerTests {
   @Test
   void shouldReturn200WhenGetStatsCalled() throws Exception {
 
-    MvcResult result = mvc
-        .perform(get("/api/stats").contentType(MediaType.APPLICATION_JSON)).andReturn();
+    MvcResult result = mvc.perform(get("/api/stats").contentType(MediaType.APPLICATION_JSON)).andReturn();
 
     MockHttpServletResponse response = result.getResponse();
     assertEquals(gson.toJson(stats), response.getContentAsString());

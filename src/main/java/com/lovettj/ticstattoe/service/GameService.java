@@ -1,14 +1,15 @@
 package com.lovettj.ticstattoe.service;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import com.google.gson.Gson;
 import com.lovettj.ticstattoe.enums.Square;
-import com.lovettj.ticstattoe.model.BoardHistory;
+import com.lovettj.ticstattoe.model.Turn;
 import com.lovettj.ticstattoe.model.Game;
-import com.lovettj.ticstattoe.repository.BoardHistoryRepository;
 import com.lovettj.ticstattoe.repository.GameRepository;
-import com.lovettj.ticstattoe.requests.BoardHistoryRequest;
+import com.lovettj.ticstattoe.repository.TurnRepository;
+import com.lovettj.ticstattoe.requests.TurnRequest;
 import com.lovettj.ticstattoe.requests.GameRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,14 @@ public class GameService {
   private GameRepository gameRepository;
 
   @Autowired
-  private BoardHistoryRepository boardHistoryRepository;
+  private TurnRepository turnRepository;
 
   public void save(GameRequest gameRequest) {
     Game savedGame = saveGame(gameRequest);
 
-    List<BoardHistoryRequest> boardHistory = gameRequest.getBoardHistory();
+    List<TurnRequest> turns = gameRequest.getTurns();
 
-    saveBoardHistory(boardHistory, savedGame);
+    saveTurns(turns, savedGame);
   }
 
   private Game saveGame(GameRequest gameRequest) {
@@ -39,14 +40,15 @@ public class GameService {
     return gameRepository.save(game);
   }
 
-  private void saveBoardHistory(List<BoardHistoryRequest> history, Game savedGame) {
-    for (int index = 0; index < history.size(); index++) {
-      List<Square> turnHistory = history.get(index).getSquares();
-      String turnHistoryJSON = gson.toJson(turnHistory);
-      BoardHistory boardHistory = new BoardHistory(savedGame, index, turnHistoryJSON);
-      boardHistoryRepository.save(boardHistory);
-    }
+  private void saveTurns(List<TurnRequest> turns, Game savedGame) {
+    IntStream.range(0, turns.size()).forEach(index -> saveTurn(savedGame, index, turns.get(index)));
+  }
 
+  private void saveTurn(Game savedGame, int index, TurnRequest turnRequest) {
+    List<Square> boardHistory = turnRequest.getBoardHistory();
+    String boardHistoryJSON = gson.toJson(boardHistory);
+    Turn turn = new Turn(savedGame, index, turnRequest.getSelectedSquare(), boardHistoryJSON);
+    turnRepository.save(turn);
   }
 
 }
