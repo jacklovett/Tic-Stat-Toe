@@ -20,14 +20,12 @@ const styles = {
   },
 }
 
-const getInitialBoardState = (): SquareValue[] => {
-  return Array(9).fill(null)
-}
+const intitialBoardState = Array(9).fill(null)
 
 const getInitialGameHistoryState = (): GameHistory => {
   return {
-    turns: [{ squares: getInitialBoardState() }],
-    currentBoardState: getInitialBoardState(),
+    turns: [{ squares: intitialBoardState }],
+    currentBoardState: intitialBoardState,
     stepNumber: 0,
     winner: null,
     isX: true,
