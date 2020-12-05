@@ -16,6 +16,7 @@ const styles = {
       width: '100%',
       maxWidth: 500,
       padding: 20,
+      paddingBottom: 30,
       background: '#ffffff',
       borderRadius: 5,
     },
@@ -28,7 +29,6 @@ const styles = {
   },
   statsWrapper: {
     root: {
-      height: '100%',
       overflowY: 'auto',
     },
   },
@@ -51,14 +51,13 @@ export const Stats = () => {
   return (
     <Stack
       styles={styles.wrapper}
-      grow
       horizontalAlign="center"
       verticalAlign="center"
       verticalFill
     >
       {isLoading && <Spinner size={SpinnerSize.large} />}
       {statistics && (
-        <Stack grow styles={styles.statsPanel}>
+        <Stack styles={styles.statsPanel} verticalFill>
           <Stack styles={styles.title}>
             <Title label="Game Statistics" />
           </Stack>

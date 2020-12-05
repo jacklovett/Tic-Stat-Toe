@@ -10,7 +10,7 @@ interface Props {
 const styles = {
   listItem: {
     root: {
-      padding: 20,
+      padding: '20px 10px 20px 10px',
       fontSize: 18,
       borderBottom: 'solid 1px #d9d9d9',
     },

@@ -30,6 +30,7 @@ export const Header = (props: IProps) => {
       verticalAlign="center"
       horizontalAlign="space-between"
       tokens={{ padding: 20 }}
+      verticalFill
     >
       <Title label="Tic-Stat-Toe" color={styles.header.root.color} />
       <IconButton
