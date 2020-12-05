@@ -29,7 +29,7 @@ import com.lovettj.ticstattoe.requests.TurnRequest;
 import com.lovettj.ticstattoe.requests.GameRequest;
 
 @ExtendWith(MockitoExtension.class)
-public class GameServiceTests {
+class GameServiceTests {
 
   private static final Long ID = 1l;
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
@@ -45,7 +45,7 @@ public class GameServiceTests {
   private GameService gameService;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     List<Square> squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);
@@ -75,7 +75,7 @@ public class GameServiceTests {
   }
 
   @Test
-  public void shouldSaveWithValidGameRequest() {
+  void shouldSaveWithValidGameRequest() {
 
     doAnswer((Answer<Game>) g -> {
       game.setId(ID);
