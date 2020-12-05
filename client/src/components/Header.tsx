@@ -1,6 +1,7 @@
 import React from 'react'
-import { IconButton, Stack, Text } from 'office-ui-fabric-react'
+import { IconButton, Stack } from 'office-ui-fabric-react'
 import * as commonStyles from './../styles'
+import { Title } from './Title'
 
 interface IProps {
   isStatsVisible: boolean
@@ -13,14 +14,6 @@ const styles = {
       fontSize: 24,
       background: '#2c313a',
       color: '#09d3ac',
-    },
-  },
-  title: {
-    root: {
-      width: '100%',
-      fontSize: 24,
-      fontWeight: 'bold',
-      textAlign: 'center',
     },
   },
 }
@@ -37,8 +30,9 @@ export const Header = (props: IProps) => {
       verticalAlign="center"
       horizontalAlign="space-between"
       tokens={{ padding: 20 }}
+      verticalFill
     >
-      <Text styles={styles.title}>Tic-Stat-Toe</Text>
+      <Title label="Tic-Stat-Toe" color={styles.header.root.color} />
       <IconButton
         styles={commonStyles.iconButton}
         title={buttonText}

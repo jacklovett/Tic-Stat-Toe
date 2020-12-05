@@ -1,7 +1,6 @@
 package com.lovettj.ticstattoe.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.Instant;
@@ -22,7 +21,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 @DataJpaTest
-public class BoardHistoryRepositoryTests {
+class BoardHistoryRepositoryTests {
 
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
 
@@ -37,7 +36,7 @@ public class BoardHistoryRepositoryTests {
   private BoardHistoryRepository boardHistoryRepository;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     game = new Game();
     game.setStart(Instant.now());
@@ -52,13 +51,13 @@ public class BoardHistoryRepositoryTests {
   }
 
   @Test
-  public void saveShouldSaveBoardHistorySuccessfully() {
+  void saveShouldSaveBoardHistorySuccessfully() {
     boardHistoryRepository.save(boardHistory);
     assertNotNull(boardHistory.getId());
   }
 
   @Test
-  public void findAllShouldReturnListOfBoardHistory() {
+  void findAllShouldReturnListOfBoardHistory() {
 
     entityManager.persist(game);
     entityManager.persist(boardHistory);

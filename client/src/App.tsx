@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Stack } from 'office-ui-fabric-react'
+import { IStyle, Stack } from 'office-ui-fabric-react'
 import { Game } from './components/Game'
 import { Header } from './components/Header'
 import { Page } from './components/Page'
@@ -9,10 +9,10 @@ const styles = {
   app: {
     root: {
       background: '#282c34',
-      minHeight: '100vh',
-      height: '100%',
-      color: '#ffffff',
-    },
+      color: '#0d0d0d',
+      height: '100vh',
+      overflow: 'hidden',
+    } as IStyle,
   },
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Stack, IStyle } from 'office-ui-fabric-react'
 
-import { SquareValue } from '../types'
+import { SquareValue } from '../models/Game'
 import { Square } from './Square'
 
 interface IBoardProps {

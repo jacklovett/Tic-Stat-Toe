@@ -1,6 +1,6 @@
 import React from 'react'
 import { DefaultButton } from 'office-ui-fabric-react'
-import { SquareValue } from '../types'
+import { SquareValue } from '../models/Game'
 
 interface ISquareProps {
   id: number

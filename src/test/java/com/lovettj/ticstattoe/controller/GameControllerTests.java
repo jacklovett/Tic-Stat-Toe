@@ -18,6 +18,7 @@ import com.lovettj.ticstattoe.enums.Square;
 import com.lovettj.ticstattoe.enums.Winner;
 import com.lovettj.ticstattoe.requests.BoardHistoryRequest;
 import com.lovettj.ticstattoe.requests.GameRequest;
+import com.lovettj.ticstattoe.responses.Stats;
 import com.lovettj.ticstattoe.service.GameService;
 import com.lovettj.ticstattoe.utils.InstantConverter;
 
@@ -31,15 +32,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(GameController.class)
-public class GameControllerTests {
+class GameControllerTests {
 
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
 
   private GameRequest gameRequest;
+
+  private Stats stats;
 
   private Gson gson;
 
@@ -50,7 +54,7 @@ public class GameControllerTests {
   private GameService gameService;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.registerTypeAdapter(Instant.class, new InstantConverter());
@@ -70,10 +74,12 @@ public class GameControllerTests {
     gameRequest.setEnd(Instant.now());
     gameRequest.setWinner(Winner.X);
     gameRequest.setBoardHistory(boardHistory);
+
+    stats = new Stats(1l);
   }
 
   @Test
-  public void shouldReturn200WhenGameRequestIsValid() throws Exception {
+  void shouldReturn200WhenGameRequestIsValid() throws Exception {
 
     doNothing().when(gameService).save(gameRequest);
 
@@ -87,10 +93,20 @@ public class GameControllerTests {
   }
 
   @Test
-  public void shouldReturn400WhenGameRequestIsInValid() throws Exception {
+  void shouldReturn400WhenGameRequestIsInValid() throws Exception {
     mvc.perform(
         post("/api/game").contentType(MediaType.APPLICATION_JSON).content("").accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void shouldReturn200WhenGetStatsCalled() throws Exception {
+
+    MvcResult result = mvc
+        .perform(get("/api/stats").contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+    MockHttpServletResponse response = result.getResponse();
+    assertEquals(gson.toJson(stats), response.getContentAsString());
   }
 
 }

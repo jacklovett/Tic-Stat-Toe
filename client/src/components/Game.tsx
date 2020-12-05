@@ -4,17 +4,19 @@ import * as commonStyles from './../styles'
 import { Board } from './Board'
 import {
   BoardHistory,
+  GameData,
   GameHistory,
   Player,
   SquareValue,
   Winner,
-} from '../types'
-import { saveGameData } from '../services/httpService'
+} from '../models/Game'
+import { httpPost } from '../services/httpService'
 
 const styles = {
   gameInfo: {
     root: {
       minWidth: 160,
+      color: '#ffffff',
     },
   },
 }
@@ -33,6 +35,10 @@ const getInitialGameHistoryState = (): GameHistory => {
     winner: null,
     isX: true,
   }
+}
+
+const saveGameData = (gameData: GameData) => {
+  httpPost('/api/game', gameData)
 }
 
 const calculateWinner = (squares: SquareValue[], stepNumber: number) => {
