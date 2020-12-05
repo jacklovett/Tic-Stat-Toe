@@ -21,7 +21,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 @DataJpaTest
-public class GameRepositoryTests {
+class GameRepositoryTests {
 
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
 
@@ -35,7 +35,7 @@ public class GameRepositoryTests {
   private GameRepository gameRepository;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     game = new Game();
     game.setStart(Instant.now());
@@ -55,13 +55,13 @@ public class GameRepositoryTests {
   }
 
   @Test
-  public void saveShouldSaveGameSuccessfully() {
+  void saveShouldSaveGameSuccessfully() {
     gameRepository.save(game);
     assertNotNull(game.getId());
   }
 
   @Test
-  public void findAllShouldReturnListOfGames() {
+  void findAllShouldReturnListOfGames() {
 
     entityManager.persist(game);
     entityManager.flush();

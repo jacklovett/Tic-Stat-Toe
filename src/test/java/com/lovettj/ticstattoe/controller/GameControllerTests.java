@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(GameController.class)
-public class GameControllerTests {
+class GameControllerTests {
 
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
 
@@ -50,7 +50,7 @@ public class GameControllerTests {
   private GameService gameService;
 
   @BeforeEach
-  public void init() {
+  void init() {
 
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.registerTypeAdapter(Instant.class, new InstantConverter());
@@ -73,7 +73,7 @@ public class GameControllerTests {
   }
 
   @Test
-  public void shouldReturn200WhenGameRequestIsValid() throws Exception {
+  void shouldReturn200WhenGameRequestIsValid() throws Exception {
 
     doNothing().when(gameService).save(gameRequest);
 
@@ -87,7 +87,7 @@ public class GameControllerTests {
   }
 
   @Test
-  public void shouldReturn400WhenGameRequestIsInValid() throws Exception {
+  void shouldReturn400WhenGameRequestIsInValid() throws Exception {
     mvc.perform(
         post("/api/game").contentType(MediaType.APPLICATION_JSON).content("").accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isBadRequest());
