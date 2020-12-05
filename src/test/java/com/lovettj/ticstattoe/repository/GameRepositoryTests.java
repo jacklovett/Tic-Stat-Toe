@@ -13,7 +13,7 @@ import java.util.List;
 
 import com.lovettj.ticstattoe.enums.Square;
 import com.lovettj.ticstattoe.enums.Winner;
-import com.lovettj.ticstattoe.model.BoardHistory;
+import com.lovettj.ticstattoe.model.Turn;
 import com.lovettj.ticstattoe.model.Game;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ class GameRepositoryTests {
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
 
   private Game game;
-  private List<BoardHistory> history;
+  private List<Turn> history;
 
   @Autowired
   private TestEntityManager entityManager;
@@ -45,12 +45,12 @@ class GameRepositoryTests {
     List<Square> squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);
 
-    BoardHistory boardHistory = new BoardHistory(game, 1, squares.toString());
+    Turn turn = new Turn(game, 1, 0, squares.toString());
 
-    history = new ArrayList<BoardHistory>();
-    history.add(boardHistory);
+    history = new ArrayList<Turn>();
+    history.add(turn);
 
-    game.setBoardHistory(history);
+    game.setTurns(history);
 
   }
 
@@ -69,7 +69,7 @@ class GameRepositoryTests {
     List<Game> foundGames = gameRepository.findAll();
 
     assertEquals(Winner.X.toString(), foundGames.get(0).getWinner());
-    assertEquals(history, foundGames.get(0).getBoardHistory());
+    assertEquals(history, foundGames.get(0).getTurns());
   }
 
 }

@@ -5,20 +5,21 @@ export type Winner = Player | Draw
 
 export type SquareValue = Player | null
 
-export type BoardHistory = {
+export type Turn = {
   squares: SquareValue[]
+  selectedSquare?: number
 }
 
 export type GameHistory = {
-  boardHistory: BoardHistory[]
+  turns: Turn[]
   stepNumber: number
   winner: Winner | null
   isX: boolean
-  currentBoardState: BoardHistory
+  currentBoardState: SquareValue[]
 }
 
 export type GameData = {
-  boardHistory: BoardHistory[]
+  turns: Turn[]
   start: Date
   end?: Date
   winner: Winner

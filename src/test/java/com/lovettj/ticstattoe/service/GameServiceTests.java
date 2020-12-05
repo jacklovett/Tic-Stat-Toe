@@ -21,11 +21,11 @@ import static org.mockito.Mockito.verify;
 
 import com.lovettj.ticstattoe.enums.Square;
 import com.lovettj.ticstattoe.enums.Winner;
-import com.lovettj.ticstattoe.model.BoardHistory;
+import com.lovettj.ticstattoe.model.Turn;
 import com.lovettj.ticstattoe.model.Game;
-import com.lovettj.ticstattoe.repository.BoardHistoryRepository;
+import com.lovettj.ticstattoe.repository.TurnRepository;
 import com.lovettj.ticstattoe.repository.GameRepository;
-import com.lovettj.ticstattoe.requests.BoardHistoryRequest;
+import com.lovettj.ticstattoe.requests.TurnRequest;
 import com.lovettj.ticstattoe.requests.GameRequest;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,7 +40,7 @@ public class GameServiceTests {
   @Mock
   private GameRepository gameRepository;
   @Mock
-  private BoardHistoryRepository boardHistoryRepository;
+  private TurnRepository turnRepository;
   @InjectMocks
   private GameService gameService;
 
@@ -50,12 +50,13 @@ public class GameServiceTests {
     List<Square> squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);
 
-    BoardHistoryRequest boardHistoryRequest = new BoardHistoryRequest();
-    boardHistoryRequest.setSquares(squares);
+    TurnRequest turnRequest = new TurnRequest();
+    turnRequest.setBoardHistory(squares);
+    turnRequest.setSelectedSquare(0);
 
-    List<BoardHistoryRequest> boardHistoryRequests = new ArrayList<BoardHistoryRequest>();
-    boardHistoryRequests.add(boardHistoryRequest);
-    boardHistoryRequests.add(boardHistoryRequest);
+    List<TurnRequest> turnRequests = new ArrayList<TurnRequest>();
+    turnRequests.add(turnRequest);
+    turnRequests.add(turnRequest);
 
     Instant start = Instant.now();
     Instant end = Instant.now();
@@ -64,7 +65,7 @@ public class GameServiceTests {
     gameRequest.setStart(start);
     gameRequest.setEnd(end);
     gameRequest.setWinner(Winner.X);
-    gameRequest.setBoardHistory(boardHistoryRequests);
+    gameRequest.setTurns(turnRequests);
 
     game = new Game();
     game.setStart(start);
@@ -83,6 +84,6 @@ public class GameServiceTests {
 
     gameService.save(gameRequest);
 
-    verify(boardHistoryRepository, times(2)).save(any(BoardHistory.class));
+    verify(turnRepository, times(2)).save(any(Turn.class));
   }
 }

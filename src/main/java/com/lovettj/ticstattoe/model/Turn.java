@@ -18,8 +18,8 @@ import javax.validation.constraints.NotBlank;
  *
  */
 @Entity
-@Table(name = "board_history")
-public class BoardHistory implements Serializable {
+@Table(name = "turns")
+public class Turn implements Serializable {
 
   private static final long serialVersionUID = 6396202134461227456L;
 
@@ -31,15 +31,18 @@ public class BoardHistory implements Serializable {
   @JoinColumn(name = "game_id")
   private Game game;
 
-  private int turn;
+  private int turnNumber;
+
+  private int selectedSquare;
 
   @NotBlank
-  private String squares;
+  private String boardHistory;
 
-  public BoardHistory(Game game, int turn, String squares) {
+  public Turn(Game game, int turnNumber, int selectedSquare, String boardHistory) {
     this.setGame(game);
-    this.setTurn(turn);
-    this.setSquares(squares);
+    this.setTurnNumber(turnNumber);
+    this.setSelectedSquare(selectedSquare);
+    this.setBoardHistory(boardHistory);
   }
 
   public Long getId() {
@@ -58,20 +61,28 @@ public class BoardHistory implements Serializable {
     this.game = game;
   }
 
-  public String getSquares() {
-    return squares;
+  public int getSelectedSquare() {
+    return selectedSquare;
   }
 
-  public void setSquares(String squares) {
-    this.squares = squares;
+  public void setSelectedSquare(int selectedSquare) {
+    this.selectedSquare = selectedSquare;
   }
 
-  public int getTurn() {
-    return turn;
+  public String getBoardHistory() {
+    return boardHistory;
   }
 
-  public void setTurn(int turn) {
-    this.turn = turn;
+  public void setBoardHistory(String boardHistory) {
+    this.boardHistory = boardHistory;
+  }
+
+  public int getTurnNumber() {
+    return turnNumber;
+  }
+
+  public void setTurnNumber(int turnNumber) {
+    this.turnNumber = turnNumber;
   }
 
 }

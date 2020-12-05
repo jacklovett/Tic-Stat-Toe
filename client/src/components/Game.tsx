@@ -3,7 +3,6 @@ import { Text, Stack, IconButton } from 'office-ui-fabric-react'
 import * as commonStyles from './../styles'
 import { Board } from './Board'
 import {
-  BoardHistory,
   GameData,
   GameHistory,
   Player,
@@ -21,15 +20,13 @@ const styles = {
   },
 }
 
-const getInitialBoardState = (): BoardHistory => {
-  return {
-    squares: Array(9).fill(null),
-  }
+const getInitialBoardState = (): SquareValue[] => {
+  return Array(9).fill(null)
 }
 
 const getInitialGameHistoryState = (): GameHistory => {
   return {
-    boardHistory: [getInitialBoardState()],
+    turns: [{ squares: getInitialBoardState() }],
     currentBoardState: getInitialBoardState(),
     stepNumber: 0,
     winner: null,
@@ -69,58 +66,44 @@ const calculateWinner = (squares: SquareValue[], stepNumber: number) => {
   return result
 }
 
-const formatBoardHistory = (boardHistory: BoardHistory[]) => {
-  // Remove empty initial board state
-  return boardHistory.splice(1, boardHistory.length)
-}
-
 export const Game = () => {
   const [start, setStart] = useState<Date>(new Date())
   const [gameHistory, setGameHistory] = useState<GameHistory>(
     getInitialGameHistoryState(),
   )
 
-  const {
-    boardHistory,
-    currentBoardState,
-    stepNumber,
-    winner,
-    isX,
-  } = gameHistory
+  const { turns, currentBoardState, stepNumber, winner, isX } = gameHistory
 
   useMemo(() => {
     if (winner) {
       saveGameData({
-        boardHistory: formatBoardHistory(boardHistory),
+        turns: turns.slice(0, turns.length), // Remove empty initial board state
         winner,
         start,
         end: new Date(),
       })
     }
-  }, [boardHistory, winner, start])
+  }, [turns, winner, start])
 
-  const handleClick = (i: number) => {
+  const handleClick = (selectedSquare: number) => {
     // First box has been selected, set start time
     if (stepNumber === 0) {
       setStart(new Date())
     }
 
-    const newStateHistory = boardHistory.slice(0, stepNumber + 1)
-    const nextTurn = newStateHistory[boardHistory.length - 1]
-    const squares = nextTurn.squares.slice()
-    if (winner || squares[i]) {
+    const newStateHistory = turns.slice(0, stepNumber + 1)
+    const nextTurn = newStateHistory[turns.length - 1]
+    const squares = nextTurn.squares
+
+    if (winner || squares[selectedSquare]) {
       return
     }
 
-    squares[i] = getPlayer()
-
-    const newBoardState = {
-      squares,
-    }
+    squares[selectedSquare] = getPlayer()
 
     setGameHistory({
-      boardHistory: boardHistory.concat([newBoardState]),
-      currentBoardState: newBoardState,
+      turns: turns.concat([{ squares, selectedSquare }]),
+      currentBoardState: squares,
       stepNumber: stepNumber + 1,
       winner: calculateWinner(squares, stepNumber),
       isX: !isX,
@@ -155,7 +138,7 @@ export const Game = () => {
         tokens={{ childrenGap: 20 }}
       >
         <Board
-          squares={currentBoardState?.squares}
+          squares={currentBoardState}
           selectSquare={(i: number) => handleClick(i)}
         />
         <Stack

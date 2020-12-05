@@ -1,11 +1,11 @@
 package com.lovettj.ticstattoe.repository;
 
-import com.lovettj.ticstattoe.model.BoardHistory;
+import com.lovettj.ticstattoe.model.Turn;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BoardHistoryRepository extends JpaRepository<BoardHistory, Long> {
+public interface TurnRepository extends JpaRepository<Turn, Long> {
 
 }

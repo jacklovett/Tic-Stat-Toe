@@ -45,7 +45,7 @@ public class Game implements Serializable {
   private String winner;
 
   @OneToMany(mappedBy = "game", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private List<BoardHistory> boardHistory;
+  private List<Turn> turns;
 
   public Game() {
   }
@@ -88,12 +88,12 @@ public class Game implements Serializable {
     this.winner = winner.toString();
   }
 
-  public List<BoardHistory> getBoardHistory() {
-    return boardHistory;
+  public List<Turn> getTurns() {
+    return turns;
   }
 
-  public void setBoardHistory(List<BoardHistory> boardHistory) {
-    this.boardHistory = boardHistory;
+  public void setTurns(List<Turn> turns) {
+    this.turns = turns;
   }
 
 }
