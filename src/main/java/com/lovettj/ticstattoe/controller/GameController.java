@@ -29,7 +29,7 @@ public class GameController {
 
   @GetMapping("/stats")
   public ResponseEntity<Stats> getStats() {
-    return ResponseEntity.ok(new Stats(1l));
+    return ResponseEntity.ok(gameService.getStatistics());
   }
 
 }

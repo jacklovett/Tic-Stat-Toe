@@ -10,6 +10,7 @@ import com.lovettj.ticstattoe.model.Game;
 import com.lovettj.ticstattoe.repository.GameRepository;
 import com.lovettj.ticstattoe.repository.TurnRepository;
 import com.lovettj.ticstattoe.requests.TurnRequest;
+import com.lovettj.ticstattoe.responses.Stats;
 import com.lovettj.ticstattoe.requests.GameRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class GameService {
 
   @Autowired
   private TurnRepository turnRepository;
+
+  public Stats getStatistics() {
+    Stats stats = gameRepository.getStatistic();
+    return stats;
+  }
 
   public void save(GameRequest gameRequest) {
     Game savedGame = saveGame(gameRequest);
