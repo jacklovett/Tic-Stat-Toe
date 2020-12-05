@@ -3,17 +3,17 @@ package com.lovettj.ticstattoe.responses;
 public class Stats {
 
   private Long gameCount;
-  private Long xWinnerCount;
-  private Long oWinnerCount;
+  private Long winnerCountX;
+  private Long winnerCountO;
   private Long drawCount;
 
   public Stats() {
   }
 
-  public Stats(Long gameCount, Long xWinnerCount, Long oWinnerCount, Long drawCount) {
+  public Stats(Long gameCount, Long winnerCountX, Long winnerCountO, Long drawCount) {
     this.setGameCount(gameCount);
-    this.setXWinnerCount(xWinnerCount);
-    this.setOWinnerCount(oWinnerCount);
+    this.setWinnerCountX(winnerCountX);
+    this.setWinnerCountO(winnerCountO);
     this.setDrawCount(drawCount);
   }
 
@@ -25,20 +25,20 @@ public class Stats {
     this.gameCount = gameCount;
   }
 
-  public Long getXWinnerCount() {
-    return xWinnerCount;
+  public Long getWinnerCountX() {
+    return winnerCountX;
   }
 
-  public void setXWinnerCount(Long xWinnerCount) {
-    this.xWinnerCount = xWinnerCount;
+  public void setWinnerCountX(Long winnerCountX) {
+    this.winnerCountX = winnerCountX;
   }
 
-  public Long getOWinnerCount() {
-    return oWinnerCount;
+  public Long getWinnerCountO() {
+    return winnerCountO;
   }
 
-  public void setOWinnerCount(Long oWinnerCount) {
-    this.oWinnerCount = oWinnerCount;
+  public void setWinnerCountO(Long winnerCountO) {
+    this.winnerCountO = winnerCountO;
   }
 
   public Long getDrawCount() {
@@ -55,8 +55,8 @@ public class Stats {
     int result = 1;
     result = prime * result + ((drawCount == null) ? 0 : drawCount.hashCode());
     result = prime * result + ((gameCount == null) ? 0 : gameCount.hashCode());
-    result = prime * result + ((oWinnerCount == null) ? 0 : oWinnerCount.hashCode());
-    result = prime * result + ((xWinnerCount == null) ? 0 : xWinnerCount.hashCode());
+    result = prime * result + ((winnerCountO == null) ? 0 : winnerCountO.hashCode());
+    result = prime * result + ((winnerCountX == null) ? 0 : winnerCountX.hashCode());
     return result;
   }
 
@@ -79,23 +79,23 @@ public class Stats {
         return false;
     } else if (!gameCount.equals(other.gameCount))
       return false;
-    if (oWinnerCount == null) {
-      if (other.oWinnerCount != null)
+    if (winnerCountO == null) {
+      if (other.winnerCountO != null)
         return false;
-    } else if (!oWinnerCount.equals(other.oWinnerCount))
+    } else if (!winnerCountO.equals(other.winnerCountO))
       return false;
-    if (xWinnerCount == null) {
-      if (other.xWinnerCount != null)
+    if (winnerCountX == null) {
+      if (other.winnerCountX != null)
         return false;
-    } else if (!xWinnerCount.equals(other.xWinnerCount))
+    } else if (!winnerCountX.equals(other.winnerCountX))
       return false;
     return true;
   }
 
   @Override
   public String toString() {
-    return "Stats [drawCount=" + drawCount + ", gameCount=" + gameCount + ", oWinnerCount=" + oWinnerCount
-        + ", xWinnerCount=" + xWinnerCount + "]";
+    return "Stats [drawCount=" + drawCount + ", gameCount=" + gameCount + ", winnerCountO=" + winnerCountO
+        + ", winnerCountX=" + winnerCountX + "]";
   }
 
 }
