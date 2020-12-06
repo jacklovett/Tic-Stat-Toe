@@ -24,7 +24,7 @@ const intitialBoardState = Array(9).fill(null)
 
 const getInitialGameHistoryState = (): GameHistory => {
   return {
-    turns: [{ squares: intitialBoardState }],
+    turns: [{ boardHistory: intitialBoardState }],
     currentBoardState: intitialBoardState,
     stepNumber: 0,
     winner: null,
@@ -75,7 +75,7 @@ export const Game = () => {
   useMemo(() => {
     if (winner) {
       saveGameData({
-        turns: turns.slice(0, turns.length), // Remove empty initial board state
+        turns: turns.slice(1, turns.length), // Remove empty initial board state
         winner,
         start,
         end: new Date(),
@@ -91,7 +91,7 @@ export const Game = () => {
 
     const newStateHistory = turns.slice(0, stepNumber + 1)
     const nextTurn = newStateHistory[turns.length - 1]
-    const squares = nextTurn.squares
+    const squares = nextTurn.boardHistory.slice()
 
     if (winner || squares[selectedSquare]) {
       return
@@ -100,7 +100,7 @@ export const Game = () => {
     squares[selectedSquare] = getPlayer()
 
     setGameHistory({
-      turns: turns.concat([{ squares, selectedSquare }]),
+      turns: turns.concat([{ boardHistory: squares, selectedSquare }]),
       currentBoardState: squares,
       stepNumber: stepNumber + 1,
       winner: calculateWinner(squares, stepNumber),

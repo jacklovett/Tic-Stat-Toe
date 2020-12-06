@@ -6,7 +6,7 @@ export type Winner = Player | Draw
 export type SquareValue = Player | null
 
 export type Turn = {
-  squares: SquareValue[]
+  boardHistory: SquareValue[]
   selectedSquare?: number
 }
 
