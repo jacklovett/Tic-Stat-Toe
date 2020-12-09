@@ -30,6 +30,18 @@ export const statItems: StatItem[] = [
     key: 'drawCount',
     label: 'Total number of draws',
   },
+  {
+    key: 'avgGameTime',
+    label: 'Average game time',
+  },
+  {
+    key: 'maxGameTime',
+    label: 'Longest game time',
+  },
+  {
+    key: 'minGameTime',
+    label: 'Shortest game time',
+  },
 ]
 
 export const dataTransformer = (statData: StatData): StatItem[] => {
