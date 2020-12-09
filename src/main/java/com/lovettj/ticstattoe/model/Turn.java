@@ -33,12 +33,12 @@ public class Turn implements Serializable {
 
   private int turnNumber;
 
-  private int selectedSquare;
+  private String selectedSquare;
 
   @NotBlank
   private String boardHistory;
 
-  public Turn(Game game, int turnNumber, int selectedSquare, String boardHistory) {
+  public Turn(Game game, int turnNumber, String selectedSquare, String boardHistory) {
     this.setGame(game);
     this.setTurnNumber(turnNumber);
     this.setSelectedSquare(selectedSquare);
@@ -61,14 +61,6 @@ public class Turn implements Serializable {
     this.game = game;
   }
 
-  public int getSelectedSquare() {
-    return selectedSquare;
-  }
-
-  public void setSelectedSquare(int selectedSquare) {
-    this.selectedSquare = selectedSquare;
-  }
-
   public String getBoardHistory() {
     return boardHistory;
   }
@@ -83,6 +75,14 @@ public class Turn implements Serializable {
 
   public void setTurnNumber(int turnNumber) {
     this.turnNumber = turnNumber;
+  }
+
+  public String getSelectedSquare() {
+    return selectedSquare;
+  }
+
+  public void setSelectedSquare(String selectedSquare) {
+    this.selectedSquare = selectedSquare;
   }
 
 }

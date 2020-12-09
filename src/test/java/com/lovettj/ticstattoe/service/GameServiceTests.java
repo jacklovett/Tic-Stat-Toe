@@ -33,6 +33,7 @@ class GameServiceTests {
 
   private static final Long ID = 1l;
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
+  private static final String SELECTED_SQUARE = "a1";
 
   private Game game;
   private GameRequest gameRequest;
@@ -52,7 +53,7 @@ class GameServiceTests {
 
     TurnRequest turnRequest = new TurnRequest();
     turnRequest.setBoardHistory(squares);
-    turnRequest.setSelectedSquare(0);
+    turnRequest.setSelectedSquare(SELECTED_SQUARE);
 
     List<TurnRequest> turnRequests = new ArrayList<TurnRequest>();
     turnRequests.add(turnRequest);

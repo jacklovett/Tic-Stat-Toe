@@ -8,7 +8,7 @@ public class TurnRequest {
 
   private List<Square> boardHistory;
 
-  private int selectedSquare;
+  private String selectedSquare;
 
   public List<Square> getBoardHistory() {
     return boardHistory;
@@ -18,11 +18,11 @@ public class TurnRequest {
     this.boardHistory = boardHistory;
   }
 
-  public int getSelectedSquare() {
+  public String getSelectedSquare() {
     return selectedSquare;
   }
 
-  public void setSelectedSquare(int selectedSquare) {
+  public void setSelectedSquare(String selectedSquare) {
     this.selectedSquare = selectedSquare;
   }
 
@@ -31,7 +31,7 @@ public class TurnRequest {
     final int prime = 31;
     int result = 1;
     result = prime * result + ((boardHistory == null) ? 0 : boardHistory.hashCode());
-    result = prime * result + selectedSquare;
+    result = prime * result + ((selectedSquare == null) ? 0 : selectedSquare.hashCode());
     return result;
   }
 
@@ -49,7 +49,10 @@ public class TurnRequest {
         return false;
     } else if (!boardHistory.equals(other.boardHistory))
       return false;
-    if (selectedSquare != other.selectedSquare)
+    if (selectedSquare == null) {
+      if (other.selectedSquare != null)
+        return false;
+    } else if (!selectedSquare.equals(other.selectedSquare))
       return false;
     return true;
   }

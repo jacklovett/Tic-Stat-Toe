@@ -4,8 +4,9 @@ import { SquareValue } from '../models/Game'
 
 interface ISquareProps {
   id: number
+  position: string
   value: SquareValue
-  selectSquare: (id: number) => void
+  selectSquare: (id: number, position: string) => void
 }
 
 const styles = {
@@ -18,14 +19,14 @@ const styles = {
 }
 
 export const Square = (props: ISquareProps) => {
-  const { id, value, selectSquare } = props
+  const { id, position, value, selectSquare } = props
   return (
     <DefaultButton
       styles={styles.square}
       id={`${id}`}
       text={value || ''}
       onClick={() => {
-        selectSquare(id)
+        selectSquare(id, position)
       }}
     />
   )

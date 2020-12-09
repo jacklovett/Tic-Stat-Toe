@@ -7,7 +7,7 @@ export type SquareValue = Player | null
 
 export type Turn = {
   boardHistory: SquareValue[]
-  selectedSquare?: number
+  selectedSquare?: string
 }
 
 export type GameHistory = {

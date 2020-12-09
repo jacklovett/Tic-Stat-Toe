@@ -83,7 +83,7 @@ export const Game = () => {
     }
   }, [turns, winner, start])
 
-  const handleClick = (selectedSquare: number) => {
+  const handleClick = (index: number, position: string) => {
     // First box has been selected, set start time
     if (stepNumber === 0) {
       setStart(new Date())
@@ -93,14 +93,16 @@ export const Game = () => {
     const nextTurn = newStateHistory[turns.length - 1]
     const squares = nextTurn.boardHistory.slice()
 
-    if (winner || squares[selectedSquare]) {
+    if (winner || squares[index]) {
       return
     }
 
-    squares[selectedSquare] = getPlayer()
+    squares[index] = getPlayer()
 
     setGameHistory({
-      turns: turns.concat([{ boardHistory: squares, selectedSquare }]),
+      turns: turns.concat([
+        { boardHistory: squares, selectedSquare: position },
+      ]),
       currentBoardState: squares,
       stepNumber: stepNumber + 1,
       winner: calculateWinner(squares, stepNumber),
@@ -137,7 +139,9 @@ export const Game = () => {
       >
         <Board
           squares={currentBoardState}
-          selectSquare={(i: number) => handleClick(i)}
+          selectSquare={(i: number, position: string) =>
+            handleClick(i, position)
+          }
         />
         <Stack
           styles={styles.gameInfo}

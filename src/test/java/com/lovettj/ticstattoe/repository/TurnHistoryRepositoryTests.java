@@ -24,6 +24,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 class TurnRepositoryTests {
 
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
+  private static final String SELECTED_SQUARE = "a1";
 
   private Game game;
   private List<Square> squares;
@@ -46,7 +47,7 @@ class TurnRepositoryTests {
     squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);
 
-    turn = new Turn(game, 1, 0, squares.toString());
+    turn = new Turn(game, 1, SELECTED_SQUARE, squares.toString());
 
   }
 
