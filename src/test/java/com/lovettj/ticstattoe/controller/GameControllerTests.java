@@ -40,6 +40,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class GameControllerTests {
 
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
+  private static final String SELECTED_SQUARE = "a1";
+  private static final String GAME_TIME = "00:00:02.705";
 
   private GameRequest gameRequest;
 
@@ -65,7 +67,7 @@ class GameControllerTests {
 
     TurnRequest turnRequest = new TurnRequest();
     turnRequest.setBoardHistory(squares);
-    turnRequest.setSelectedSquare(0);
+    turnRequest.setSelectedSquare(SELECTED_SQUARE);
 
     List<TurnRequest> turns = new ArrayList<TurnRequest>();
     turns.add(turnRequest);
@@ -76,7 +78,7 @@ class GameControllerTests {
     gameRequest.setWinner(Winner.X);
     gameRequest.setTurns(turns);
 
-    stats = new Stats(1l, 1l, 1l, 1l);
+    stats = new Stats(1l, 1l, 1l, 1l, GAME_TIME, GAME_TIME, GAME_TIME);
   }
 
   @Test

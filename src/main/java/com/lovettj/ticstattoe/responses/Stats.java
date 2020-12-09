@@ -1,20 +1,26 @@
 package com.lovettj.ticstattoe.responses;
 
 public class Stats {
-
   private Long gameCount;
   private Long winnerCountX;
   private Long winnerCountO;
   private Long drawCount;
+  private String avgGameTime;
+  private String maxGameTime;
+  private String minGameTime;
 
   public Stats() {
   }
 
-  public Stats(Long gameCount, Long winnerCountX, Long winnerCountO, Long drawCount) {
+  public Stats(Long gameCount, Long winnerCountX, Long winnerCountO, Long drawCount, String avgGameTime,
+      String maxGameTime, String minGameTime) {
     this.setGameCount(gameCount);
     this.setWinnerCountX(winnerCountX);
     this.setWinnerCountO(winnerCountO);
     this.setDrawCount(drawCount);
+    this.setAvgGameTime(avgGameTime);
+    this.setMaxGameTime(maxGameTime);
+    this.setMinGameTime(minGameTime);
   }
 
   public Long getGameCount() {
@@ -49,12 +55,39 @@ public class Stats {
     this.drawCount = drawCount;
   }
 
+  public String getAvgGameTime() {
+    return avgGameTime;
+  }
+
+  public void setAvgGameTime(String avgGameTime) {
+    this.avgGameTime = avgGameTime;
+  }
+
+  public String getMaxGameTime() {
+    return maxGameTime;
+  }
+
+  public void setMaxGameTime(String maxGameTime) {
+    this.maxGameTime = maxGameTime;
+  }
+
+  public String getMinGameTime() {
+    return minGameTime;
+  }
+
+  public void setMinGameTime(String minGameTime) {
+    this.minGameTime = minGameTime;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
+    result = prime * result + ((avgGameTime == null) ? 0 : avgGameTime.hashCode());
     result = prime * result + ((drawCount == null) ? 0 : drawCount.hashCode());
     result = prime * result + ((gameCount == null) ? 0 : gameCount.hashCode());
+    result = prime * result + ((maxGameTime == null) ? 0 : maxGameTime.hashCode());
+    result = prime * result + ((minGameTime == null) ? 0 : minGameTime.hashCode());
     result = prime * result + ((winnerCountO == null) ? 0 : winnerCountO.hashCode());
     result = prime * result + ((winnerCountX == null) ? 0 : winnerCountX.hashCode());
     return result;
@@ -69,6 +102,11 @@ public class Stats {
     if (getClass() != obj.getClass())
       return false;
     Stats other = (Stats) obj;
+    if (avgGameTime == null) {
+      if (other.avgGameTime != null)
+        return false;
+    } else if (!avgGameTime.equals(other.avgGameTime))
+      return false;
     if (drawCount == null) {
       if (other.drawCount != null)
         return false;
@@ -78,6 +116,16 @@ public class Stats {
       if (other.gameCount != null)
         return false;
     } else if (!gameCount.equals(other.gameCount))
+      return false;
+    if (maxGameTime == null) {
+      if (other.maxGameTime != null)
+        return false;
+    } else if (!maxGameTime.equals(other.maxGameTime))
+      return false;
+    if (minGameTime == null) {
+      if (other.minGameTime != null)
+        return false;
+    } else if (!minGameTime.equals(other.minGameTime))
       return false;
     if (winnerCountO == null) {
       if (other.winnerCountO != null)
@@ -94,7 +142,8 @@ public class Stats {
 
   @Override
   public String toString() {
-    return "Stats [drawCount=" + drawCount + ", gameCount=" + gameCount + ", winnerCountO=" + winnerCountO
+    return "Stats [avgGameTime=" + avgGameTime + ", drawCount=" + drawCount + ", gameCount=" + gameCount
+        + ", maxGameTime=" + maxGameTime + ", minGameTime=" + minGameTime + ", winnerCountO=" + winnerCountO
         + ", winnerCountX=" + winnerCountX + "]";
   }
 
