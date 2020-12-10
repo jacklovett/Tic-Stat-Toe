@@ -8,12 +8,14 @@ public class Stats {
   private String avgGameTime;
   private String maxGameTime;
   private String minGameTime;
+  private String startPositionsX;
+  private String startPositionsO;
 
   public Stats() {
   }
 
   public Stats(Long gameCount, Long winnerCountX, Long winnerCountO, Long drawCount, String avgGameTime,
-      String maxGameTime, String minGameTime) {
+      String maxGameTime, String minGameTime, String startPositionsX, String startPositionsO) {
     this.setGameCount(gameCount);
     this.setWinnerCountX(winnerCountX);
     this.setWinnerCountO(winnerCountO);
@@ -21,6 +23,8 @@ public class Stats {
     this.setAvgGameTime(avgGameTime);
     this.setMaxGameTime(maxGameTime);
     this.setMinGameTime(minGameTime);
+    this.setStartPositionsX(startPositionsX);
+    this.setStartPositionsO(startPositionsO);
   }
 
   public Long getGameCount() {
@@ -79,6 +83,22 @@ public class Stats {
     this.minGameTime = minGameTime;
   }
 
+  public String getStartPositionsX() {
+    return startPositionsX;
+  }
+
+  public void setStartPositionsX(String startPositionsX) {
+    this.startPositionsX = startPositionsX;
+  }
+
+  public String getStartPositionsO() {
+    return startPositionsO;
+  }
+
+  public void setStartPositionsO(String startPositionsO) {
+    this.startPositionsO = startPositionsO;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -88,6 +108,8 @@ public class Stats {
     result = prime * result + ((gameCount == null) ? 0 : gameCount.hashCode());
     result = prime * result + ((maxGameTime == null) ? 0 : maxGameTime.hashCode());
     result = prime * result + ((minGameTime == null) ? 0 : minGameTime.hashCode());
+    result = prime * result + ((startPositionsO == null) ? 0 : startPositionsO.hashCode());
+    result = prime * result + ((startPositionsX == null) ? 0 : startPositionsX.hashCode());
     result = prime * result + ((winnerCountO == null) ? 0 : winnerCountO.hashCode());
     result = prime * result + ((winnerCountX == null) ? 0 : winnerCountX.hashCode());
     return result;
@@ -127,6 +149,16 @@ public class Stats {
         return false;
     } else if (!minGameTime.equals(other.minGameTime))
       return false;
+    if (startPositionsO == null) {
+      if (other.startPositionsO != null)
+        return false;
+    } else if (!startPositionsO.equals(other.startPositionsO))
+      return false;
+    if (startPositionsX == null) {
+      if (other.startPositionsX != null)
+        return false;
+    } else if (!startPositionsX.equals(other.startPositionsX))
+      return false;
     if (winnerCountO == null) {
       if (other.winnerCountO != null)
         return false;
@@ -143,8 +175,9 @@ public class Stats {
   @Override
   public String toString() {
     return "Stats [avgGameTime=" + avgGameTime + ", drawCount=" + drawCount + ", gameCount=" + gameCount
-        + ", maxGameTime=" + maxGameTime + ", minGameTime=" + minGameTime + ", winnerCountO=" + winnerCountO
-        + ", winnerCountX=" + winnerCountX + "]";
+        + ", maxGameTime=" + maxGameTime + ", minGameTime=" + minGameTime + ", startPositionsO=" + startPositionsO
+        + ", startPositionsX=" + startPositionsX + ", winnerCountO=" + winnerCountO + ", winnerCountX=" + winnerCountX
+        + "]";
   }
 
 }

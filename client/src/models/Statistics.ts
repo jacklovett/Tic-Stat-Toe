@@ -42,6 +42,14 @@ export const statItems: StatItem[] = [
     key: 'minGameTime',
     label: 'Shortest game time',
   },
+  {
+    key: 'startPositionsX',
+    label: 'Most popular start position (X)',
+  },
+  {
+    key: 'startPositionsO',
+    label: 'Most popular start position (O)',
+  },
 ]
 
 export const dataTransformer = (statData: StatData): StatItem[] => {

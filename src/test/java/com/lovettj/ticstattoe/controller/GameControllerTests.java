@@ -78,7 +78,7 @@ class GameControllerTests {
     gameRequest.setWinner(Winner.X);
     gameRequest.setTurns(turns);
 
-    stats = new Stats(1l, 1l, 1l, 1l, GAME_TIME, GAME_TIME, GAME_TIME);
+    stats = new Stats();
   }
 
   @Test

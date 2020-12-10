@@ -28,7 +28,7 @@ public class GameService {
   private TurnRepository turnRepository;
 
   public Stats getStatistics() {
-    return gameRepository.getStatistic();
+    return gameRepository.getStats();
   }
 
   public void save(GameRequest gameRequest) {
