@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.lovettj.ticstattoe.enums.Square;
 import com.lovettj.ticstattoe.enums.Winner;
@@ -26,6 +28,7 @@ import com.lovettj.ticstattoe.model.Game;
 import com.lovettj.ticstattoe.repository.TurnRepository;
 import com.lovettj.ticstattoe.repository.GameRepository;
 import com.lovettj.ticstattoe.requests.TurnRequest;
+import com.lovettj.ticstattoe.responses.Stats;
 import com.lovettj.ticstattoe.requests.GameRequest;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,8 +36,10 @@ class GameServiceTests {
 
   private static final Long ID = 1l;
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
+  private static final String SELECTED_SQUARE = "a1";
 
   private Game game;
+  private Stats stats;
   private GameRequest gameRequest;
 
   @Mock
@@ -52,7 +57,7 @@ class GameServiceTests {
 
     TurnRequest turnRequest = new TurnRequest();
     turnRequest.setBoardHistory(squares);
-    turnRequest.setSelectedSquare(0);
+    turnRequest.setSelectedSquare(SELECTED_SQUARE);
 
     List<TurnRequest> turnRequests = new ArrayList<TurnRequest>();
     turnRequests.add(turnRequest);
@@ -72,6 +77,8 @@ class GameServiceTests {
     game.setEnd(end);
     game.setWinner(Winner.X);
 
+    stats = new Stats();
+
   }
 
   @Test
@@ -85,5 +92,15 @@ class GameServiceTests {
     gameService.save(gameRequest);
 
     verify(turnRepository, times(2)).save(any(Turn.class));
+  }
+
+  @Test
+  void shouldReturnStatistics() {
+
+    when(gameRepository.getStats()).thenReturn(stats);
+
+    Stats statistics = gameService.getStatistics();
+
+    assertEquals(stats, statistics);
   }
 }

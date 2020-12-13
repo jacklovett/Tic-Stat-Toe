@@ -2,7 +2,6 @@ import React from 'react'
 import { Stack, Text } from 'office-ui-fabric-react'
 
 interface Props {
-  key: string
   label: string
   value: string
 }
@@ -18,15 +17,10 @@ const styles = {
 }
 
 export const ListItem = (props: Props) => {
-  const { key, label, value } = props
+  const { label, value } = props
 
   return (
-    <Stack
-      styles={styles.listItem}
-      key={key}
-      horizontal
-      horizontalAlign="space-between"
-    >
+    <Stack styles={styles.listItem} horizontal horizontalAlign="space-between">
       <Text>{label}</Text>
       <Text>{value}</Text>
     </Stack>

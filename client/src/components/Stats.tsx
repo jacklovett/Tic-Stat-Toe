@@ -42,10 +42,11 @@ export const Stats = () => {
     setLoading(true)
 
     http<StatData>('/api/stats')
-      .then((data: StatData) => setStatistics(dataTransformer(data)))
+      .then((data: StatData) => {
+        setStatistics(dataTransformer(data))
+        setLoading(false)
+      })
       .catch((error) => console.error(error))
-
-    setLoading(false)
   }, [setStatistics, setLoading])
 
   return (

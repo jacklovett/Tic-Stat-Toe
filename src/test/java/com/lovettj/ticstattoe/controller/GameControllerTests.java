@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class GameControllerTests {
 
   private static final Square[] SQUARE_ARRAY = { Square.X, null, null, Square.O, null, null, null, null, Square.X };
+  private static final String SELECTED_SQUARE = "a1";
 
   private GameRequest gameRequest;
 
@@ -58,14 +60,14 @@ class GameControllerTests {
 
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.registerTypeAdapter(Instant.class, new InstantConverter());
-    gson = gsonBuilder.create();
+    gson = gsonBuilder.serializeNulls().create();
 
     List<Square> squares = new ArrayList<Square>();
     Collections.addAll(squares, SQUARE_ARRAY);
 
     TurnRequest turnRequest = new TurnRequest();
     turnRequest.setBoardHistory(squares);
-    turnRequest.setSelectedSquare(0);
+    turnRequest.setSelectedSquare(SELECTED_SQUARE);
 
     List<TurnRequest> turns = new ArrayList<TurnRequest>();
     turns.add(turnRequest);
@@ -76,7 +78,7 @@ class GameControllerTests {
     gameRequest.setWinner(Winner.X);
     gameRequest.setTurns(turns);
 
-    stats = new Stats(1l);
+    stats = new Stats();
   }
 
   @Test
@@ -102,6 +104,8 @@ class GameControllerTests {
 
   @Test
   void shouldReturn200WhenGetStatsCalled() throws Exception {
+
+    when(gameService.getStatistics()).thenReturn(stats);
 
     MvcResult result = mvc.perform(get("/api/stats").contentType(MediaType.APPLICATION_JSON)).andReturn();
 
