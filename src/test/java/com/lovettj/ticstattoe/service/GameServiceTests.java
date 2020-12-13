@@ -14,10 +14,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.lovettj.ticstattoe.enums.Square;
 import com.lovettj.ticstattoe.enums.Winner;
@@ -26,6 +28,7 @@ import com.lovettj.ticstattoe.model.Game;
 import com.lovettj.ticstattoe.repository.TurnRepository;
 import com.lovettj.ticstattoe.repository.GameRepository;
 import com.lovettj.ticstattoe.requests.TurnRequest;
+import com.lovettj.ticstattoe.responses.Stats;
 import com.lovettj.ticstattoe.requests.GameRequest;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,6 +39,7 @@ class GameServiceTests {
   private static final String SELECTED_SQUARE = "a1";
 
   private Game game;
+  private Stats stats;
   private GameRequest gameRequest;
 
   @Mock
@@ -73,6 +77,8 @@ class GameServiceTests {
     game.setEnd(end);
     game.setWinner(Winner.X);
 
+    stats = new Stats();
+
   }
 
   @Test
@@ -86,5 +92,15 @@ class GameServiceTests {
     gameService.save(gameRequest);
 
     verify(turnRepository, times(2)).save(any(Turn.class));
+  }
+
+  @Test
+  void shouldReturnStatistics() {
+
+    when(gameRepository.getStats()).thenReturn(stats);
+
+    Stats statistics = gameService.getStatistics();
+
+    assertEquals(stats, statistics);
   }
 }

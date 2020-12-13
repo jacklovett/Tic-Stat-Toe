@@ -50,6 +50,14 @@ export const statItems: StatItem[] = [
     key: 'startPositionsO',
     label: 'Most popular start position (O)',
   },
+  {
+    key: 'winningStartPositionsX',
+    label: 'Most popular winning start position (X)',
+  },
+  {
+    key: 'winningStartPositionsO',
+    label: 'Most popular winning start position (O)',
+  },
 ]
 
 export const dataTransformer = (statData: StatData): StatItem[] => {
