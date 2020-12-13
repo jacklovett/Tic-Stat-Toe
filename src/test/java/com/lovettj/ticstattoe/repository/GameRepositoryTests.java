@@ -72,5 +72,4 @@ class GameRepositoryTests {
     assertEquals(Winner.X.toString(), foundGames.get(0).getWinner());
     assertEquals(history, foundGames.get(0).getTurns());
   }
-
 }
