@@ -3,6 +3,13 @@ export type StatData = {
   xWinnerCount: number
   oWinnerCount: number
   drawCount: number
+  avgGameTime: string
+  maxGameTime: string
+  minGameTime: string
+  startPositioinsX: string
+  startPositionsO: string
+  winningStartPositionsX: string
+  winningStartPositionsO: string
 }
 
 type StatDataKey = keyof StatData
