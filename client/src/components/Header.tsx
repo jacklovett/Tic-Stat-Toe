@@ -1,7 +1,8 @@
 import React from 'react'
 import { IconButton, Stack } from 'office-ui-fabric-react'
-import * as commonStyles from './../styles'
+
 import { Title } from './Title'
+import * as commonStyles from './../styles'
 
 interface IProps {
   isStatsVisible: boolean

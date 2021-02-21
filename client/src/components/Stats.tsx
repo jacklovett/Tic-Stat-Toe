@@ -1,7 +1,9 @@
 import { Spinner, SpinnerSize, Stack } from 'office-ui-fabric-react'
 import React, { useMemo, useState } from 'react'
-import { dataTransformer, StatItem, StatData } from '../models/Statistics'
+
 import { http } from '../services/httpService'
+import { dataTransformer, StatItem, StatData } from '../models/Statistics'
+
 import { ListItem } from './ListItem'
 import { Title } from './Title'
 
