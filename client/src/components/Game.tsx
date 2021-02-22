@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { Text, Stack, IconButton } from 'office-ui-fabric-react'
-import * as commonStyles from './../styles'
+
+import { httpPost } from '../services/httpService'
 import { Board } from './Board'
 import {
   GameData,
@@ -9,12 +10,13 @@ import {
   SquareValue,
   Winner,
 } from '../models/Game'
-import { httpPost } from '../services/httpService'
+import * as commonStyles from './../styles'
 
 const styles = {
   gameInfo: {
     root: {
       minWidth: 160,
+      height: 80,
       color: '#ffffff',
     },
   },
