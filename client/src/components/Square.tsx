@@ -25,6 +25,7 @@ export const Square = (props: ISquareProps) => {
     <DefaultButton
       styles={styles.square}
       id={`${id}`}
+      ariaLabel={position}
       text={value || ''}
       onClick={() => {
         selectSquare(id, position)

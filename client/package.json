@@ -9,7 +9,7 @@
     "@types/react": "16.9.51",
     "@types/react-dom": "16.9.8",
     "immer": "^8.0.1",
-    "office-ui-fabric-react": "^7.60.0",
+    "office-ui-fabric-react": "^7.162.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "^3.4.1",
