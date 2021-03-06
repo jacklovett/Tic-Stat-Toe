@@ -37,6 +37,8 @@ public class Turn implements Serializable {
 
   @NotBlank
   private String boardHistory;
+  
+  public Turn() {}
 
   public Turn(Game game, int turnNumber, String selectedSquare, String boardHistory) {
     this.setGame(game);
