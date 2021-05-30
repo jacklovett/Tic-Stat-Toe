@@ -1,12 +1,11 @@
 import React from 'react'
-import { IconButton, Stack } from 'office-ui-fabric-react'
+import { Stack } from '@fluentui/react'
 
 import { Title } from './Title'
-import * as commonStyles from './../styles'
+import { ButtonIcon, IButtonIconProps } from './ButtonIcon'
 
 interface IProps {
-  isStatsVisible: boolean
-  setStatsVisible: (value: boolean) => void
+  navButtonProps?: IButtonIconProps
 }
 
 const styles = {
@@ -20,9 +19,7 @@ const styles = {
 }
 
 export const Header = (props: IProps) => {
-  const { isStatsVisible, setStatsVisible } = props
-
-  const buttonText = isStatsVisible ? 'Back To Game' : 'Show Statistics'
+  const { navButtonProps } = props
 
   return (
     <Stack
@@ -34,13 +31,7 @@ export const Header = (props: IProps) => {
       verticalFill
     >
       <Title label="Tic-Stat-Toe" color={styles.header.root.color} />
-      <IconButton
-        styles={commonStyles.iconButton}
-        title={buttonText}
-        ariaLabel={buttonText}
-        iconProps={{ iconName: `${isStatsVisible ? 'game' : 'chart'}` }}
-        onClick={() => setStatsVisible(!isStatsVisible)}
-      />
+      {navButtonProps && <ButtonIcon {...navButtonProps} />}
     </Stack>
   )
 }

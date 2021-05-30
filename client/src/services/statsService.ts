@@ -1,3 +1,5 @@
+import { http } from './httpService'
+
 export type StatData = {
   gameCount: number
   xWinnerCount: number
@@ -67,11 +69,20 @@ export const statItems: StatItem[] = [
   },
 ]
 
-export const dataTransformer = (statData: StatData): StatItem[] => {
-  return statItems.map((statItem: StatItem) => {
-    return {
-      ...statItem,
-      value: statData[statItem.key as StatDataKey] ?? '-',
-    } as StatItem
-  })
+const dataTransformer = (statData: StatData): StatItem[] => {
+  return statItems.map(
+    (statItem: StatItem) =>
+      ({
+        ...statItem,
+        value: statData[statItem.key as StatDataKey] ?? '-',
+      } as StatItem),
+  )
+}
+
+export const getStats = async () => {
+  const response: StatData = await http<StatData>('/api/stats')
+
+  if (response) {
+    return dataTransformer(response)
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
-import { DefaultButton } from 'office-ui-fabric-react'
+import { DefaultButton } from '@fluentui/react'
 
-import { SquareValue } from '../models/Game'
+import { SquareValue } from '../services/gameService'
 
 interface ISquareProps {
   id: number
@@ -26,10 +26,8 @@ export const Square = (props: ISquareProps) => {
       styles={styles.square}
       id={`${id}`}
       ariaLabel={position}
-      text={value || ''}
-      onClick={() => {
-        selectSquare(id, position)
-      }}
+      text={value ?? ''}
+      onClick={() => selectSquare(id, position)}
     />
   )
 }

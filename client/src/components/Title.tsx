@@ -1,26 +1,24 @@
 import React from 'react'
-import { memoizeFunction, Text } from 'office-ui-fabric-react'
-
-const getStyles = memoizeFunction((color?: string) => {
-  return {
-    title: {
-      root: {
-        width: '100%',
-        fontSize: 24,
-        color: color,
-        fontWeight: 'bold',
-        textAlign: 'center',
-      },
-    },
-  }
-})
+import { memoizeFunction, Text } from '@fluentui/react'
 
 interface Props {
   label: string
   color?: string
 }
 
+const getStyles = memoizeFunction((color?: string) => ({
+  title: {
+    root: {
+      width: '100%',
+      fontSize: 24,
+      color,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+  },
+}))
+
 export const Title = (props: Props) => {
-  const styles = getStyles(props.color)
-  return <Text styles={styles.title}>{props.label}</Text>
+  const { color, label } = props
+  return <Text styles={getStyles(color).title}>{label}</Text>
 }
