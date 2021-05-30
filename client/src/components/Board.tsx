@@ -1,8 +1,9 @@
 import React from 'react'
-import { Stack, IStyle } from 'office-ui-fabric-react'
+import { IStyle, Stack } from '@fluentui/react'
+
+import { SquareValue } from '../services/gameService'
 
 import { Square } from './Square'
-import { SquareValue } from '../models/Game'
 
 interface IBoardProps {
   selectSquare: (i: number, position: string) => void
@@ -26,16 +27,14 @@ const styles = {
 export const Board = (props: IBoardProps) => {
   const { selectSquare, squares } = props
 
-  const renderSquare = (index: number, position: string) => {
-    return (
-      <Square
-        id={index}
-        position={position}
-        value={squares[index]}
-        selectSquare={selectSquare}
-      />
-    )
-  }
+  const renderSquare = (index: number, position: string) => (
+    <Square
+      id={index}
+      position={position}
+      value={squares[index]}
+      selectSquare={selectSquare}
+    />
+  )
 
   return (
     <Stack>

@@ -1,9 +1,10 @@
-import { Stack } from 'office-ui-fabric-react'
 import React from 'react'
+import { Stack, Text } from '@fluentui/react'
 
 interface IProps {
   header: JSX.Element
   body: JSX.Element
+  error?: string
 }
 
 const getStyles = () => {
@@ -19,11 +20,14 @@ const getStyles = () => {
         height: `calc(100% - ${headerHeight}px)`,
       },
     },
+    errorText: {
+      root: { color: '#ffffff' },
+    },
   }
 }
 
 export const Page = (props: IProps) => {
-  const { body, header } = props
+  const { body, header, error } = props
   const styles = getStyles()
   return (
     <Stack grow verticalFill>
@@ -33,7 +37,12 @@ export const Page = (props: IProps) => {
         horizontalAlign="center"
         tokens={{ padding: 20 }}
       >
-        {body}
+        {!error && body}
+        {error && (
+          <Stack horizontalAlign="center" verticalFill verticalAlign="center">
+            <Text styles={styles.errorText}>{error}</Text>
+          </Stack>
+        )}
       </Stack>
     </Stack>
   )
