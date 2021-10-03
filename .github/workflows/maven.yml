@@ -8,7 +8,11 @@ on:
     branches: [ master ]
 
 jobs:
-  services:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    services:
       postgres:
         image: postgres
         env:
@@ -19,9 +23,6 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
-  build:
-    name: Build
-    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -45,6 +46,18 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: developer
+          POSTGRES_DB: TicStatToe
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 14
@@ -61,3 +74,6 @@ jobs:
         run: mvn -B clean package -DskipTests
       - name: Maven Verify
         run: mvn -B clean verify
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
