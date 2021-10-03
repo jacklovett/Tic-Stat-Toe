@@ -9,6 +9,7 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
 
     services:
@@ -41,9 +42,9 @@ jobs:
         POSTGRES_HOST: localhost
         POSTGRES_PORT: 5432
 
- test:
-    name: Unit Test
-    runs-on: ubuntu-18.04
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -58,6 +59,6 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Run tests with Maven
-          run: mvn -B clean package -DskipTests
-        - name: Maven Verify
-          run: mvn -B clean verify
+        run: mvn -B clean package -DskipTests
+      - name: Maven Verify
+        run: mvn -B clean verify
