@@ -20,12 +20,12 @@ export const Home = (props: RouterProps) => {
           <Stack styles={styles.contents} tokens={{ childrenGap: 36 }}>
             <Stack tokens={{ childrenGap: 16 }}>
               <Text styles={styles.text}>
-                {
-                  'Have you ever wondered what statistic and insights can be gathered from the classic game Tic-Tac-Toe? ("Noughts and crosses" to my fellow Brits).'
-                }
+                `Have you ever wondered what statistic and insights can be
+                gathered from the classic game Tic-Tac-Toe? ("Noughts and
+                crosses" to my fellow Brits).'
               </Text>
               <Text styles={styles.text}>
-                {'Yeah, probably not...Well here it is anyway, Enjoy!'}
+                'Yeah, probably not... Well here it is anyway, Enjoy!'
               </Text>
             </Stack>
             <Button
