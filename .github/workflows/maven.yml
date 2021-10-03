@@ -43,7 +43,7 @@ jobs:
         POSTGRES_PORT: 5432
 
   test:
-    name: Tests
+    name: JUnit Tests
     runs-on: ubuntu-latest
 
     services:
