@@ -17,10 +17,8 @@ jobs:
         image: postgres
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: "${{ secrets.POSTGRES_PW }}"
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PW }}
           POSTGRES_DB: TicStatToe
-        run: |
-          echo ${#POSTGRES_PASSWORD}
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
@@ -53,7 +51,7 @@ jobs:
         image: postgres
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: "${{ secrets.POSTGRES_PW }}"
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PW }}
           POSTGRES_DB: TicStatToe
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
