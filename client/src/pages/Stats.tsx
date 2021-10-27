@@ -43,8 +43,9 @@ export const Stats = (props: RouterProps) => {
 
   const [isLoading, setLoading] = useState<boolean>(false)
   const [statistics, setStatistics] = useState<StatItem[] | null>(null)
-  const [errorMessage, setErrorMessage] =
-    useState<string | undefined>(undefined)
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  )
 
   useMemo(async () => {
     setLoading(true)
@@ -88,13 +89,10 @@ export const Stats = (props: RouterProps) => {
                 <Title label="Game Statistics" />
               </Stack>
               <Stack styles={styles.statsWrapper}>
-                {statistics?.map((statistic: StatItem) => (
-                  <ListItem
-                    key={statistic.key}
-                    label={statistic.label}
-                    value={`${statistic.value}`}
-                  />
-                ))}
+                {statistics?.map((statistic: StatItem) => {
+                  const { key, label, value } = statistic
+                  return <ListItem key={key} label={label} value={`${value}`} />
+                })}
               </Stack>
             </Stack>
           )}

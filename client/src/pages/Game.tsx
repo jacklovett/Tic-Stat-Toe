@@ -22,6 +22,8 @@ const styles = {
       minWidth: 160,
       height: 80,
       color: '#ffffff',
+      padding: 20,
+      fontSize: 24,
     },
   },
 }
@@ -111,7 +113,7 @@ export const Game = (props: RouterProps) => {
               horizontalAlign="center"
               tokens={{ childrenGap: 20 }}
             >
-              <Text styles={{ root: { color: '#ffffff' } }}>
+              <Text styles={{ root: { color: '#ffffff', fontSize: 18 } }}>
                 {getStatus(player, winner)}
               </Text>
               {stepNumber && (

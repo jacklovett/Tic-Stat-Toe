@@ -53,7 +53,11 @@ export const getStatus = (player: string, winner: Winner | null) => {
 }
 
 export const saveGameData = (gameData: GameData) => {
-  httpPost<GameData>('/api/game', gameData)
+  try {
+    httpPost<GameData>('/api/game', gameData)
+  } catch (error) {
+    console.error(`Unable to save game data: ${error}`)
+  }
 }
 
 export const calculateWinner = (squares: SquareValue[], stepNumber: number) => {
