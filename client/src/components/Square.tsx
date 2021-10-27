@@ -1,5 +1,5 @@
 import React from 'react'
-import { DefaultButton } from '@fluentui/react'
+import { DefaultButton, IStyle } from '@fluentui/react'
 
 import { SquareValue } from '../services/gameService'
 
@@ -13,8 +13,19 @@ interface ISquareProps {
 const styles = {
   square: {
     root: {
-      width: 50,
-      height: 50,
+      width: 90,
+      height: 90,
+      background: 'transparent',
+      border: 'solid 2px #09d3ac',
+      borderRadius: 0,
+      color: '#ffffff',
+      padding: 0,
+      selectors: {
+        '& .ms-Button:hover, .ms-Button-flexContainer:hover': {
+          background: '#09d3ac',
+          color: '#000000',
+        } as IStyle,
+      },
     },
   },
 }

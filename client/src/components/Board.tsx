@@ -11,6 +11,11 @@ interface IBoardProps {
 }
 
 const styles = {
+  boardWrapper: {
+    root: {
+      border: 'solid 2px #09d3ac',
+    },
+  },
   boardRow: {
     root: {
       selectors: {
@@ -37,7 +42,7 @@ export const Board = (props: IBoardProps) => {
   )
 
   return (
-    <Stack>
+    <Stack styles={styles.boardWrapper}>
       <Stack horizontal styles={styles.boardRow}>
         {renderSquare(0, 'a1')}
         {renderSquare(1, 'b1')}
