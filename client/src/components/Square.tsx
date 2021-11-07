@@ -20,6 +20,7 @@ const styles = {
       borderRadius: 0,
       color: '#ffffff',
       padding: 0,
+      fontSize: 16,
       selectors: {
         '& .ms-Button:hover, .ms-Button-flexContainer:hover': {
           background: '#09d3ac',

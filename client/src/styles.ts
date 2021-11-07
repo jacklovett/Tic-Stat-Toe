@@ -1,7 +1,7 @@
 export const basicPage = {
   contents: {
     root: {
-      maxWidth: 300,
+      maxWidth: 600,
     },
   },
   text: {
@@ -9,5 +9,7 @@ export const basicPage = {
       color: '#ffffff',
       fontSize: 16,
     },
-  },
+  }
+ 
+
 }

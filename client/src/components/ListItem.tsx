@@ -10,7 +10,7 @@ const styles = {
   listItem: {
     root: {
       padding: '20px 10px 20px 10px',
-      fontSize: 18,
+      fontSize: 16,
       borderBottom: 'solid 1px #d9d9d9',
     },
   },

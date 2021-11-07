@@ -1,6 +1,8 @@
 import React from 'react'
 import { Stack, Text } from '@fluentui/react'
 
+import * as commonStyles from '../styles'
+
 interface IProps {
   header: JSX.Element
   body: JSX.Element
@@ -10,6 +12,7 @@ interface IProps {
 const getStyles = () => {
   const headerHeight = 60
   return {
+    ...commonStyles.basicPage,
     headerWrapper: {
       root: {
         height: headerHeight,
@@ -18,10 +21,12 @@ const getStyles = () => {
     bodyWrapper: {
       root: {
         height: `calc(100% - ${headerHeight}px)`,
+        width: '100%',
+        padding: 32,
+        paddingLeft: 16,
+        paddingRight: 16,
+        overflowY: 'auto',
       },
-    },
-    errorText: {
-      root: { color: '#ffffff' },
     },
   }
 }
@@ -32,15 +37,11 @@ export const Page = (props: IProps) => {
   return (
     <Stack grow verticalFill>
       <Stack styles={styles.headerWrapper}>{header}</Stack>
-      <Stack
-        styles={styles.bodyWrapper}
-        horizontalAlign="center"
-        tokens={{ padding: 20 }}
-      >
+      <Stack styles={styles.bodyWrapper} horizontalAlign="center">
         {!error && body}
         {error && (
           <Stack horizontalAlign="center" verticalFill verticalAlign="center">
-            <Text styles={styles.errorText}>{error}</Text>
+            <Text styles={styles.text}>{error}</Text>
           </Stack>
         )}
       </Stack>
