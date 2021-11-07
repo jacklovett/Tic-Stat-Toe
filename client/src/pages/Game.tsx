@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { RouterProps } from 'react-router-dom'
 import { Stack, Text } from '@fluentui/react'
 
+import * as commonStyles from '../styles'
+
 import {
   calculateWinner,
   GameHistory,
@@ -17,6 +19,7 @@ import { Page } from '../components/Page'
 import { ButtonIcon } from '../components/ButtonIcon'
 
 const styles = {
+  ...commonStyles.basicPage,
   gameInfo: {
     root: {
       minWidth: 160,
@@ -113,9 +116,7 @@ export const Game = (props: RouterProps) => {
               horizontalAlign="center"
               tokens={{ childrenGap: 20 }}
             >
-              <Text styles={{ root: { color: '#ffffff', fontSize: 18 } }}>
-                {getStatus(player, winner)}
-              </Text>
+              <Text styles={styles.text}>{getStatus(player, winner)}</Text>
               {stepNumber && (
                 <ButtonIcon
                   text="Reset"

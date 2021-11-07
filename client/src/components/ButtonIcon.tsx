@@ -10,7 +10,7 @@ export interface IButtonIconProps {
 const styles = {
   root: {
     fontSize: 24,
-    color: '#ffffff',
+    color: '#c60af5',
     margin: 0,
     padding: 0,
     selectors: {
