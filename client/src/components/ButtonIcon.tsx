@@ -10,13 +10,13 @@ export interface IButtonIconProps {
 const styles = {
   root: {
     fontSize: 24,
-    color: '#c60af5',
+    color: '#09d3ac',
     margin: 0,
     padding: 0,
     selectors: {
       '& .ms-Button-icon:hover, .ms-Button-flexContainer:hover': {
         background: '#282c34',
-        color: '#09d3ac',
+        color: '#c60af5',
       } as IStyle,
     },
   },

@@ -12,6 +12,8 @@
     "react-scripts": "^3.4.1"
   },
   "scripts": {
+    "server": "cd .. && mvn spring-boot:run &",
+    "dev": "concurrently \"yarn server\" \"yarn start\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
