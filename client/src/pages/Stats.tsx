@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react'
-import { RouterProps } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Spinner, SpinnerSize, Stack } from '@fluentui/react'
 
 import { getStats, StatItem } from '../services/statsService'
@@ -38,8 +38,8 @@ const styles = {
   },
 }
 
-export const Stats = (props: RouterProps) => {
-  const { history } = props
+export const Stats = () => {
+  const navigate = useNavigate()
 
   const [isLoading, setLoading] = useState<boolean>(false)
   const [statistics, setStatistics] = useState<StatItem[] | null>(null)
@@ -71,7 +71,7 @@ export const Stats = (props: RouterProps) => {
           navButtonProps={{
             text: 'Back to Game',
             iconName: 'game',
-            onClick: () => history.push('/game'),
+            onClick: () => navigate('/game'),
           }}
         />
       }

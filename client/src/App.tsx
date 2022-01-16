@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  RouterProps,
-} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { IStyle, Stack } from '@fluentui/react'
 
 import { Home } from './pages/Home'
@@ -23,51 +18,15 @@ const styles = {
   },
 }
 
-interface Routes {
-  name: string
-  path: string
-  component: (routeProps: RouterProps) => JSX.Element
-}
-
-const routes: Routes[] = [
-  {
-    name: 'stats',
-    path: '/stats',
-    component: (routeProps: RouterProps) => <Stats {...routeProps} />,
-  },
-  {
-    name: 'game',
-    path: '/game',
-    component: (routeProps: RouterProps) => <Game {...routeProps} />,
-  },
-  {
-    name: 'home',
-    path: '/',
-    component: (routeProps: RouterProps) => <Home {...routeProps} />,
-  },
-  {
-    name: '404',
-    path: '*',
-    component: (routeProps: RouterProps) => <PageNotFound {...routeProps} />,
-  },
-]
-
 const App = () => (
   <Stack styles={styles.app}>
     <Router>
-      <Switch>
-        {routes?.map((route: Routes) => {
-          const { name, path, component } = route
-          return (
-            <Route
-              key={name}
-              exact={name === 'home'}
-              path={path}
-              render={(routeProps) => component(routeProps)}
-            />
-          )
-        })}
-      </Switch>
+      <Routes>
+        <Route key="home" path="/" element={<Home />} />
+        <Route key="game" path="/game" element={<Game />} />
+        <Route key="stats" path="/stats" element={<Stats />} />
+        <Route key="404" path="*" element={<PageNotFound />} />
+      </Routes>
     </Router>
   </Stack>
 )
