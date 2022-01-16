@@ -24,7 +24,7 @@ const styles = {
       selectors: {
         '& .ms-Button:hover, .ms-Button-flexContainer:hover': {
           background: '#09d3ac',
-          color: '#000000',
+          color: '#c60af5',
         } as IStyle,
       },
     },
