@@ -1,5 +1,5 @@
 import React from 'react'
-import { RouterProps } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Stack, Text, Image, IImageProps, ImageFit } from '@fluentui/react'
 
 import { Button } from '../components/Button'
@@ -20,8 +20,8 @@ const imageProps: Partial<IImageProps> = {
   height: 270,
 }
 
-export const Home = (props: RouterProps) => {
-  const { history } = props
+export const Home = () => {
+  const navigate = useNavigate()
   return (
     <Page
       header={<Header />}
@@ -37,7 +37,7 @@ export const Home = (props: RouterProps) => {
             </Text>
             <Text styles={styles.text}>No? Well here it is anyway, Enjoy!</Text>
           </Stack>
-          <Button text="Start Playing" onClick={() => history.push('/game')} />
+          <Button text="Start Playing" onClick={() => navigate('/game')} />
         </Stack>
       }
     />

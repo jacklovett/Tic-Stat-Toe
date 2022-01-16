@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { RouterProps } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Stack, Text } from '@fluentui/react'
 
 import * as commonStyles from '../styles'
@@ -31,8 +31,8 @@ const styles = {
   },
 }
 
-export const Game = (props: RouterProps) => {
-  const { history } = props
+export const Game = () => {
+  const navigate = useNavigate()
 
   const [start, setStart] = useState<Date>(new Date())
   const [gameHistory, setGameHistory] = useState<GameHistory>(
@@ -88,7 +88,7 @@ export const Game = (props: RouterProps) => {
           navButtonProps={{
             text: 'Show Statistics',
             iconName: 'chart',
-            onClick: () => history.push('/stats'),
+            onClick: () => navigate('/stats'),
           }}
         />
       }
