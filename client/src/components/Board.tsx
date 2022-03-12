@@ -4,6 +4,7 @@ import { IStyle, Stack } from '@fluentui/react'
 import { SquareValue } from '../services/gameService'
 
 import { Square } from './Square'
+import { ScreenSize, useMediaQuery } from '../hooks/useMediaQuery'
 
 interface IBoardProps {
   selectSquare: (i: number, position: string) => void
@@ -32,11 +33,14 @@ const styles = {
 export const Board = (props: IBoardProps) => {
   const { selectSquare, squares } = props
 
+  const screenSize: ScreenSize = useMediaQuery()
+
   const renderSquare = (index: number, position: string) => (
     <Square
       id={index}
       position={position}
       value={squares[index]}
+      screenSize={screenSize}
       selectSquare={selectSquare}
     />
   )

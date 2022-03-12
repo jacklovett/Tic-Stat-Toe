@@ -3,12 +3,13 @@ import { DefaultButton, IStyle } from '@fluentui/react'
 
 import { SquareValue } from '../services/gameService'
 
-import { ScreenSize, useMediaQuery } from '../hooks/useMediaQuery'
+import { ScreenSize } from '../hooks/useMediaQuery'
 
 interface ISquareProps {
   id: number
   position: string
   value: SquareValue
+  screenSize: number
   selectSquare: (id: number, position: string) => void
 }
 
@@ -50,9 +51,7 @@ const getStyles = (screenSize: ScreenSize) => {
 }
 
 export const Square = (props: ISquareProps) => {
-  const { id, position, value, selectSquare } = props
-
-  const screenSize: ScreenSize = useMediaQuery()
+  const { id, position, value, screenSize, selectSquare } = props
 
   return (
     <DefaultButton

@@ -6,7 +6,7 @@ export enum ScreenSize {
   Desktop = 2,
 }
 
-const tablet = window.matchMedia('(min-width: 780px)')
+const tablet = window.matchMedia('(min-width: 767px)')
 const desktop = window.matchMedia('(min-width: 1224px)')
 
 export const useMediaQuery = (): ScreenSize => {
@@ -28,6 +28,8 @@ export const useMediaQuery = (): ScreenSize => {
         setScreenSize(newScreenSize)
       }
     }
+
+    onResize()
 
     window.addEventListener('resize', onResize)
 
