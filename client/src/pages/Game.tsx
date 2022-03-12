@@ -25,7 +25,7 @@ const styles = {
       minWidth: 160,
       height: 80,
       color: '#ffffff',
-      padding: 20,
+      padding: 32,
       fontSize: 24,
     },
   },

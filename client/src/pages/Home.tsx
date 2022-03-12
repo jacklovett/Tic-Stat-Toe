@@ -26,7 +26,12 @@ export const Home = () => {
     <Page
       header={<Header />}
       body={
-        <Stack styles={styles.contents} tokens={{ childrenGap: 32 }}>
+        <Stack
+          styles={styles.contents}
+          tokens={{ childrenGap: 48 }}
+          verticalAlign="center"
+          verticalFill
+        >
           <Stack horizontal horizontalAlign="center">
             <Image {...imageProps} />
           </Stack>
@@ -37,7 +42,7 @@ export const Home = () => {
             </Text>
             <Text styles={styles.text}>No? Well here it is anyway, Enjoy!</Text>
           </Stack>
-          <Button text="Start Playing" onClick={() => navigate('/game')} />
+          <Button text="Start Playing!" onClick={() => navigate('/game')} />
         </Stack>
       }
     />
