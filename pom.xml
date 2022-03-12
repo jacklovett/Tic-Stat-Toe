@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lovettj</groupId>
-	<artifactId>ticstattoe</artifactId>
+	<artifactId>tic-stat-toe</artifactId>
 	<version>1.0.0</version>
 	<name>TicStatToe</name>
 	<description>Demo project for Spring Boot</description>

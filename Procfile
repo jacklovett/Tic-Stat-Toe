@@ -1,1 +1,1 @@
-web: java -jar target/ticstattoe-1.0.0.jar
+web: java -jar target/tic-stat-toe-1.0.0.jar
