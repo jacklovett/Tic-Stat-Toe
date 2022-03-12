@@ -86,6 +86,16 @@
                     </goals>
                 </execution>
             </executions>
+						 <configuration>
+                  <archive>
+                    <manifest>
+
+                    <!-- give full qualified name of your main class-->
+                      <mainClass>com.lovettj.ticstattoe.TicStatToeApplication</mainClass>
+
+                    </manifest>
+                  </archive>
+                </configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
