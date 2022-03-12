@@ -23,8 +23,6 @@ const getStyles = () => {
         height: `calc(100% - ${headerHeight}px)`,
         width: '100%',
         padding: 32,
-        paddingLeft: 16,
-        paddingRight: 16,
         overflowY: 'auto',
       },
     },
