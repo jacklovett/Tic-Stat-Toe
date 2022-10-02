@@ -2,7 +2,9 @@
 
 Tic-Stat-Toe is a small web application where we gather and analyse the data we get when playing a classic game of tic-tac-toe (Noughts and Crosses).
 
-Simply play a game, and then explore the results. See how long games take, see which player normally comes out on top, which square is best to take first. etc. 
+Simply play a game, and then explore the results. See how long games take, see which player normally comes out on top, which square is best to take first. etc.
+
+Try it out: http://tic-stat-toe.herokuapp.com/
 
 ## Stack
 
