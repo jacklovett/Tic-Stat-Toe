@@ -4,10 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static java.math.BigDecimal.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +26,7 @@ import com.lovettj.ticstattoe.service.GameService;
 import com.lovettj.ticstattoe.utils.InstantConverter;
 
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,6 +37,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
@@ -110,7 +114,22 @@ class GameControllerTests {
     MvcResult result = mvc.perform(get("/api/stats").contentType(MediaType.APPLICATION_JSON)).andReturn();
 
     MockHttpServletResponse response = result.getResponse();
-    assertEquals(gson.toJson(stats), response.getContentAsString());
+    JSONAssert.assertEquals("{}", response.getContentAsString(), false);
+  }
+
+  @Test
+  void shouldReturn200WhenGetStatsWithTimes() throws Exception {
+    stats = stats(ONE, new BigDecimal("360000"), ZERO);
+    when(gameService.getStatistics()).thenReturn(stats);
+
+    mvc.perform(get("/api/stats").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.avgGameTime").value("PT1S"))
+            .andExpect(jsonPath("$.maxGameTime").value("PT100H"))
+            .andExpect(jsonPath("$.minGameTime").value("PT0S"));
+  }
+
+  private Stats stats(BigDecimal avgGameTime, BigDecimal maxGameTime, BigDecimal minGameTime) {
+    return new Stats(10L, 10L, 10L, 10L, avgGameTime, maxGameTime, minGameTime, "c", "d", "e", "f");
   }
 
 }

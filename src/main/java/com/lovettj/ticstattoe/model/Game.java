@@ -1,6 +1,7 @@
 package com.lovettj.ticstattoe.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -32,13 +33,14 @@ import com.lovettj.ticstattoe.responses.Stats;
 @SqlResultSetMapping(name = "StatsResults", classes = { @ConstructorResult(targetClass = Stats.class, columns = {
     @ColumnResult(name = "gameCount", type = Long.class), @ColumnResult(name = "winnerCountX", type = Long.class),
     @ColumnResult(name = "winnerCountO", type = Long.class), @ColumnResult(name = "drawCount", type = Long.class),
-    @ColumnResult(name = "avgGameTime", type = String.class), @ColumnResult(name = "maxGameTime", type = String.class),
-    @ColumnResult(name = "minGameTime", type = String.class),
+    @ColumnResult(name = "avgGameTime", type = BigDecimal.class),
+    @ColumnResult(name = "maxGameTime", type = BigDecimal.class),
+    @ColumnResult(name = "minGameTime", type = BigDecimal.class),
     @ColumnResult(name = "startPositionsX", type = String.class),
     @ColumnResult(name = "startPositionsO", type = String.class),
     @ColumnResult(name = "winningStartPositionsX", type = String.class),
     @ColumnResult(name = "winningStartPositionsO", type = String.class) }) })
-@NamedNativeQuery(name = "Game.getStats", query = "SELECT count(*) AS gameCount,(SELECT count(*) from games WHERE winner = 'X') AS winnerCountX,(SELECT count(*) from games WHERE winner = 'O') AS winnerCountO,(SELECT count(*) from games WHERE winner = 'DRAW') AS drawCount, CAST(avg(g.end_time - g.start_time) AS text) AS avgGameTime, CAST(max(g.end_time - g.start_time) AS text) AS maxGameTime, CAST(min(g.end_time - g.start_time) AS text) AS minGameTime, (SELECT string_agg(position, ', ') FROM (SELECT t.selected_square AS position, count(*) AS count_num,rank() OVER (ORDER BY count(*) DESC) AS rnk FROM games g JOIN turns t ON t.game_id = g.id WHERE t.turn_number = 0 GROUP BY position) as sub WHERE rnk = 1) AS startPositionsX, (SELECT string_agg(position, ', ') FROM (SELECT t.selected_square AS position, count(*) AS count_num,rank() OVER (ORDER BY count(*) DESC) AS rnk FROM games g JOIN turns t ON t.game_id = g.id WHERE t.turn_number = 1 GROUP BY position) as sub WHERE rnk = 1) AS startPositionsO, (SELECT string_agg(position, ', ') FROM (SELECT t.selected_square AS position, count(*) AS count_num,rank() OVER (ORDER BY count(*) DESC) AS rnk FROM games g JOIN turns t ON t.game_id = g.id WHERE t.turn_number = 0 and g.winner = 'X' GROUP BY position) as sub WHERE rnk = 1) AS winningStartPositionsX, (SELECT string_agg(position, ', ') FROM (SELECT t.selected_square AS position, count(*) AS count_num,rank() OVER (ORDER BY count(*) DESC) AS rnk FROM games g JOIN turns t ON t.game_id = g.id WHERE t.turn_number = 1 and g.winner = 'O' GROUP BY position) as sub WHERE rnk = 1) AS winningStartPositionsO FROM games g LIMIT 1", resultSetMapping = "StatsResults")
+@NamedNativeQuery(name = "Game.getStats", query = "SELECT count(*) AS gameCount,(SELECT count(*) from games WHERE winner = 'X') AS winnerCountX,(SELECT count(*) from games WHERE winner = 'O') AS winnerCountO,(SELECT count(*) from games WHERE winner = 'DRAW') AS drawCount, avg(EXTRACT(EPOCH from g.end_time) - EXTRACT(EPOCH from g.start_time)) AS avgGameTime, max(EXTRACT(EPOCH from g.end_time) - EXTRACT(EPOCH from g.start_time)) AS maxGameTime, min(EXTRACT(EPOCH from g.end_time) - EXTRACT(EPOCH from g.start_time)) AS minGameTime, (SELECT string_agg(position, ', ') FROM (SELECT t.selected_square AS position, count(*) AS count_num,rank() OVER (ORDER BY count(*) DESC) AS rnk FROM games g JOIN turns t ON t.game_id = g.id WHERE t.turn_number = 0 GROUP BY position) as sub WHERE rnk = 1) AS startPositionsX, (SELECT string_agg(position, ', ') FROM (SELECT t.selected_square AS position, count(*) AS count_num,rank() OVER (ORDER BY count(*) DESC) AS rnk FROM games g JOIN turns t ON t.game_id = g.id WHERE t.turn_number = 1 GROUP BY position) as sub WHERE rnk = 1) AS startPositionsO, (SELECT string_agg(position, ', ') FROM (SELECT t.selected_square AS position, count(*) AS count_num,rank() OVER (ORDER BY count(*) DESC) AS rnk FROM games g JOIN turns t ON t.game_id = g.id WHERE t.turn_number = 0 and g.winner = 'X' GROUP BY position) as sub WHERE rnk = 1) AS winningStartPositionsX, (SELECT string_agg(position, ', ') FROM (SELECT t.selected_square AS position, count(*) AS count_num,rank() OVER (ORDER BY count(*) DESC) AS rnk FROM games g JOIN turns t ON t.game_id = g.id WHERE t.turn_number = 1 and g.winner = 'O' GROUP BY position) as sub WHERE rnk = 1) AS winningStartPositionsO FROM games g LIMIT 1", resultSetMapping = "StatsResults")
 @Entity
 @Table(name = "games")
 public class Game implements Serializable {

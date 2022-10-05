@@ -1,11 +1,15 @@
 package com.lovettj.ticstattoe.repository;
 
+import com.lovettj.ticstattoe.responses.Stats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static java.math.BigDecimal.ZERO;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,5 +75,14 @@ class GameRepositoryTests {
 
     assertEquals(Winner.X.toString(), foundGames.get(0).getWinner());
     assertEquals(history, foundGames.get(0).getTurns());
+  }
+
+  @Test
+  void shouldGetStats() {
+    gameRepository.save(game);
+
+    Stats result = gameRepository.getStats();
+    assertThat(result).isEqualTo(new Stats(1L, 1L, 0L, 0L,
+            ZERO, ZERO, ZERO, null, "a1", null, null));
   }
 }
