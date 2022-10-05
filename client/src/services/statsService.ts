@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { http } from './httpService'
 
 export type StatData = {
@@ -70,13 +71,41 @@ export const statItems: StatItem[] = [
 ]
 
 const dataTransformer = (statData: StatData): StatItem[] => {
-  return statItems.map(
-    (statItem: StatItem) =>
-      ({
-        ...statItem,
-        value: statData[statItem.key as StatDataKey] ?? '-',
-      } as StatItem),
-  )
+  return statItems.map((statItem: StatItem) => {
+    const key = statItem.key as StatDataKey
+    const valueString = `${statData[key]}`
+    return {
+      ...statItem,
+      value: formatData(key, valueString),
+    } as StatItem
+  })
+}
+
+const formatData = (key: string, value: string): string => {
+  return key.includes('Time') ? formatTime(value) : value ?? '-'
+}
+
+const formatTime = (value: string): string => {
+  const duration = moment.duration(value)
+  const hrs = duration.hours()
+  const min = duration.minutes()
+  const secs = duration.seconds()
+
+  let timeString = ''
+  // include hours
+  if (hrs) {
+    timeString += `${hrs}h:`
+  }
+  // include minutes
+  if (min) {
+    timeString += `${min}m:`
+  }
+  // include seconds
+  if (secs) {
+    timeString += `${secs}s`
+  }
+
+  return timeString
 }
 
 export const getStats = async () => {
