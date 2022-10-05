@@ -1,35 +1,41 @@
 package com.lovettj.ticstattoe.responses;
 
+import java.math.BigDecimal;
+import java.time.Duration;
+
 public class Stats {
   private Long gameCount;
   private Long winnerCountX;
   private Long winnerCountO;
   private Long drawCount;
-  private String avgGameTime;
-  private String maxGameTime;
-  private String minGameTime;
+  private Duration avgGameTime;
+  private Duration maxGameTime;
+  private Duration minGameTime;
   private String startPositionsX;
   private String startPositionsO;
   private String winningStartPositionsX;
   private String winningStartPositionsO;
 
-  public Stats() {
-  }
+  public Stats() {}
 
-  public Stats(Long gameCount, Long winnerCountX, Long winnerCountO, Long drawCount, String avgGameTime,
-      String maxGameTime, String minGameTime, String startPositionsX, String startPositionsO,
+  public Stats(Long gameCount, Long winnerCountX, Long winnerCountO, Long drawCount, BigDecimal avgGameTime,
+               BigDecimal maxGameTime, BigDecimal minGameTime, String startPositionsX, String startPositionsO,
       String winningStartPositionsX, String winningStartPositionsO) {
     this.setGameCount(gameCount);
     this.setWinnerCountX(winnerCountX);
     this.setWinnerCountO(winnerCountO);
     this.setDrawCount(drawCount);
-    this.setAvgGameTime(avgGameTime);
-    this.setMaxGameTime(maxGameTime);
-    this.setMinGameTime(minGameTime);
+    this.avgGameTime = seconds(avgGameTime);
+    this.maxGameTime = seconds(maxGameTime);
+    this.minGameTime = seconds(minGameTime);
     this.setStartPositionsX(startPositionsX);
     this.setStartPositionsO(startPositionsO);
     this.setWinningStartPositionsX(winningStartPositionsX);
     this.setWinningStartPositionsO(winningStartPositionsO);
+  }
+
+  private Duration seconds(BigDecimal time) {
+    return Duration.ofSeconds(time.longValue());
   }
 
   public Long getGameCount() {
@@ -64,28 +70,16 @@ public class Stats {
     this.drawCount = drawCount;
   }
 
-  public String getAvgGameTime() {
+  public Duration getAvgGameTime() {
     return avgGameTime;
   }
 
-  public void setAvgGameTime(String avgGameTime) {
-    this.avgGameTime = avgGameTime;
-  }
-
-  public String getMaxGameTime() {
+  public Duration getMaxGameTime() {
     return maxGameTime;
   }
 
-  public void setMaxGameTime(String maxGameTime) {
-    this.maxGameTime = maxGameTime;
-  }
-
-  public String getMinGameTime() {
+  public Duration getMinGameTime() {
     return minGameTime;
-  }
-
-  public void setMinGameTime(String minGameTime) {
-    this.minGameTime = minGameTime;
   }
 
   public String getStartPositionsX() {
