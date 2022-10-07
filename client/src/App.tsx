@@ -12,8 +12,7 @@ const styles = {
     root: {
       background: '#282c34',
       color: '#0d0d0d',
-      height: '100vh',
-      overflow: 'hidden',
+      height: '100%',
     } as IStyle,
   },
 }
