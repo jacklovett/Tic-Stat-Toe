@@ -1,5 +1,5 @@
 import React from 'react'
-import { IStyle, Stack, Text } from '@fluentui/react'
+import { Stack, Text } from '@fluentui/react'
 
 import * as commonStyles from '../styles'
 
@@ -16,12 +16,7 @@ const getStyles = () => {
     headerWrapper: {
       root: {
         height: headerHeight,
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1,
-      } as IStyle,
+      },
     },
     bodyWrapper: {
       root: {
@@ -29,9 +24,7 @@ const getStyles = () => {
         width: '100%',
         padding: 32,
         overflowY: 'auto',
-        position: 'relative',
-        top: 60,
-      } as IStyle,
+      },
     },
   }
 }
