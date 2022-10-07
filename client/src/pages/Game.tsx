@@ -13,10 +13,7 @@ import {
   saveGameData,
 } from '../services/gameService'
 
-import { Board } from '../components/Board'
-import { Header } from '../components/Header'
-import { Page } from '../components/Page'
-import { ButtonIcon } from '../components/ButtonIcon'
+import { Page, Header, Board, ButtonIcon } from '../components'
 
 const styles = {
   ...commonStyles.basicPage,

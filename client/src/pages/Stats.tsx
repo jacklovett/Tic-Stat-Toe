@@ -4,10 +4,7 @@ import { Spinner, SpinnerSize, Stack } from '@fluentui/react'
 
 import { getStats, StatItem } from '../services/statsService'
 
-import { ListItem } from '../components/ListItem'
-import { Title } from '../components/Title'
-import { Page } from '../components/Page'
-import { Header } from '../components/Header'
+import { Page, Header, Title, ListItem } from '../components'
 
 const styles = {
   wrapper: {

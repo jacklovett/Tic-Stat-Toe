@@ -2,11 +2,9 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Stack, Text } from '@fluentui/react'
 
-import { Button } from '../components/Button'
-import { Header } from '../components/Header'
-import { Page } from '../components/Page'
-
 import * as commonStyles from '../styles'
+
+import { Button, Page, Header } from '../components'
 
 const styles = commonStyles.basicPage
 
