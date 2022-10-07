@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,6 +82,6 @@ class GameRepositoryTests {
 
     Stats result = gameRepository.getStats();
     assertThat(result).isEqualTo(new Stats(1L, 1L, 0L, 0L,
-            ZERO, ZERO, ZERO, null, "a1", null, null));
+        ZERO, ZERO, ZERO, null, "a1", null, null));
   }
 }

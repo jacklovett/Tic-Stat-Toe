@@ -2,9 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Stack, Text, Image, IImageProps, ImageFit } from '@fluentui/react'
 
-import { Button } from '../components/Button'
-import { Header } from '../components/Header'
-import { Page } from '../components/Page'
+import { Button, Page, Header } from '../components'
 
 import * as commonStyles from '../styles'
 

@@ -2,10 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { IStyle, Stack } from '@fluentui/react'
 
-import { Home } from './pages/Home'
-import { PageNotFound } from './pages/PageNotFound'
-import { Game } from './pages/Game'
-import { Stats } from './pages/Stats'
+import { Home, Game, Stats, PageNotFound } from './pages'
 
 const styles = {
   app: {
