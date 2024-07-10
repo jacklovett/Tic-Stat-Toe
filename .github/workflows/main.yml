@@ -71,8 +71,8 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "jack.l.lovett@gmail.com"
+          git config --global user.name "jacklovett"
           mv client/build build
           git add build
           git commit -m "Deploy React app to GitHub Pages"
