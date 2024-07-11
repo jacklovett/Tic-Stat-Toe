@@ -12,7 +12,7 @@
 	<artifactId>tic-stat-toe</artifactId>
 	<version>1.0.0</version>
 	<name>TicStatToe</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Backend for tic stat toe statistics</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

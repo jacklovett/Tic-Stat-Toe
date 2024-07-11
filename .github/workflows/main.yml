@@ -1,17 +1,16 @@
-name: CI with Maven and React
+name: Java CI with Maven
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
   build:
-    name: Build and Deploy
+    name: Build
     runs-on: ubuntu-latest
+
+    env:
+      DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}  # Set DB_PASSWORD globally for the build job
 
     services:
       postgres:
@@ -25,8 +24,7 @@ jobs:
           - 5432:5432
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set up JDK 14
         uses: actions/setup-java@v1
@@ -42,45 +40,13 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-        env:
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.npm
-            client/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('client/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node
-
-      - name: Install Dependencies
-        run: yarn install
-        working-directory: client
-
-      - name: Build React Frontend
-        run: yarn build
-        working-directory: client
-
-      - name: Deploy to GitHub Pages
-        run: |
-          git config --global user.email "jack.l.lovett@gmail.com"
-          git config --global user.name "jacklovett"
-          mv client/build build
-          git add build
-          git commit -m "Deploy React app to GitHub Pages"
-          git push origin `git subtree split --prefix build master`:gh-pages --force
 
   test:
     name: JUnit Tests
     runs-on: ubuntu-latest
+
+    env:
+      DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}  # Set DB_PASSWORD globally for the test job
 
     services:
       postgres:
@@ -94,8 +60,7 @@ jobs:
           - 5432:5432
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Set up JDK 14
         uses: actions/setup-java@v1
@@ -114,6 +79,3 @@ jobs:
 
       - name: Maven Verify
         run: mvn -B clean verify
-        env:
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
