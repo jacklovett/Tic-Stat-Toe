@@ -1,67 +1,79 @@
-name: Java CI/CD with Maven and Deploy React to GitHub Pages
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Java CI with Maven
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
-  build_and_test:
-    name: Build and Test
+  build:
+    name: Build
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: TicStatToe
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
 
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 14
+      uses: actions/setup-java@v1
+      with:
+        java-version: 14
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5432
+
+  test:
+    name: JUnit Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: TicStatToe
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v2
       - name: Set up JDK 14
         uses: actions/setup-java@v1
         with:
           java-version: 14
-
       - name: Cache Maven packages
         uses: actions/cache@v2
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-
-      - name: Build and Test with Maven
-        run: mvn -B clean verify --file pom.xml
-
-  deploy_react_to_github_pages:
-    name: Deploy React to GitHub Pages
-    needs: build_and_test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build React Application
-        run: npm run build  # Replace with your build command if different
-
-      - name: Deploy to GitHub Pages
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-
-          git checkout --orphan gh-pages
-          git rm -rf .
-          mv build/* .
-          echo "Your GitHub Pages URL: https://${{ github.repository_owner }}.github.io/${{ github.repository_name }}/" > README.md
-          git add .
-          git commit -m "Deploy React to GitHub Pages"
-          git push origin gh-pages --force
+      - name: Run tests with Maven
+        run: mvn -B clean package -DskipTests
+      - name: Maven Verify
+        run: mvn -B clean verify
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
