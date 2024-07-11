@@ -4,8 +4,6 @@ Tic-Stat-Toe is a small web application where we gather and analyse the data we 
 
 Simply play a game, and then explore the results. See how long games take, see which player normally comes out on top, which square is best to take first. etc.
 
-Try it out: http://tic-stat-toe.herokuapp.com/
-
 ## Stack
 
 The front end is [React](https://reactjs.org/) with [TypeScript](https://www.typescriptlang.org/) build from [`create-react-app`](https://reactjs.org/docs/create-a-new-react-app.html). [Yarn](https://yarnpkg.com/) is used for package management and it is also uses Microsofts design system [FluentUI](https://developer.microsoft.com/en-us/fluentui#/).
@@ -47,3 +45,12 @@ mvn spring-boot:run
 ```
 
 That's it! we should have a working local version of the application communicating with a local database. If you notice any problems or think this explanation need improving then just create an issue in the [Github](https://github.com/jacklovett/Tic-Stat-Toe) project
+
+### Tests
+
+Currently there are only tests for the Java backend. To run these, be in the root directory and run:
+
+```
+mvn clean
+mvn test
+```
