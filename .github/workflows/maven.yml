@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java CI/CD with Maven and Deploy to GitHub Pages
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
   pull_request:
     branches:
-      - '*'
+      - master
 
 jobs:
   build:
@@ -28,6 +28,9 @@ jobs:
           - 5432:5432
 
     steps:
+      - name: Log PostgreSQL Password
+        run: echo "DB_PASSWORD is $DB_PASSWORD"
+
       - uses: actions/checkout@v2
 
       - name: Set up JDK 14
@@ -45,17 +48,38 @@ jobs:
       - name: Build and Test with Maven
         run: mvn -B clean verify --file pom.xml
 
-  deploy:
-    name: Deploy to Production
+  deploy_to_github_pages:
+    name: Deploy to GitHub Pages
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'  # Only deploy on master branch
+    if: github.ref == 'refs/heads/master'
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-      # Add steps for deployment here, e.g., deploying to a server or cloud platform
-      # Example: deploy using SSH or using deployment services like AWS Elastic Beanstalk or Heroku
-      - name: Deploy to Server
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Application
+        run: npm run build  # Replace with your build command if different
+
+      - name: Deploy to GitHub Pages
         run: |
-          ssh user@your-server 'bash -s' < deploy_script.sh
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+          # Deploy the 'build' directory to the 'gh-pages' branch
+          git checkout --orphan gh-pages
+          git rm -rf .
+          mv build/* .
+          echo "Your GitHub Pages URL: https://${{ github.repository_owner }}.github.io/${{ github.repository_name }}/" > README.md
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          git push origin gh-pages --force
+
