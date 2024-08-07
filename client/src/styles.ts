@@ -3,7 +3,8 @@ import { IStyle } from '@fluentui/react'
 export const basicPage = {
   contents: {
     root: {
-      maxWidth: 600,
+      paddingTop: 32,
+      maxWidth: 640,
       height: '100%',
     } as IStyle,
   },

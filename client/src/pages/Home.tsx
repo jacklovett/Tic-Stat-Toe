@@ -8,6 +8,12 @@ import * as commonStyles from '../styles'
 
 const styles = {
   ...commonStyles.basicPage,
+  text: {
+    root: {
+      ...commonStyles.basicPage.text.root,
+      textAlign: 'center',
+    },
+  },
 }
 
 const imageProps: Partial<IImageProps> = {

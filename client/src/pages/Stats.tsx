@@ -83,7 +83,7 @@ export const Stats = () => {
           {statistics && (
             <Stack styles={styles.statsPanel} verticalFill>
               <Stack styles={styles.title}>
-                <Title label="Game Statistics" />
+                <Title label="Game Statistics" color="#8b07ab" />
               </Stack>
               <Stack styles={styles.statsWrapper}>
                 {statistics?.map((statistic: StatItem) => {

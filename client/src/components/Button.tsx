@@ -11,14 +11,14 @@ const buttonStyles = {
     height: 48,
     border: 'none',
     borderRadius: 25,
-    background: '#c60af5',
+    background: '#9e08c4',
     fontSize: 16,
     selectors: {
       '&.ms-Button:hover, .ms-Button--primary:hover': {
         border: 'none',
         borderRadius: 25,
         background: '#09d3ac',
-        color: '#c60af5',
+        color: '#9e08c4',
       } as IStyle,
     },
   },

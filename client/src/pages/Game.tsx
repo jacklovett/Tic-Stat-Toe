@@ -95,6 +95,7 @@ export const Game = () => {
           horizontalAlign="center"
           grow
           verticalFill
+          styles={styles.contents}
         >
           <Stack
             horizontal
